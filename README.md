@@ -2,7 +2,7 @@
 
 Project created for personal use - helps me organize, and easier collect information from job offers.
 
-**The project will most likely not be supported after I find a job**
+#### **The project will most likely not be supported after I find a job**
 _hopefully soon 😜_
 
 ### RoadMap:
