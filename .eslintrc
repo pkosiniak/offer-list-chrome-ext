@@ -1,0 +1,99 @@
+{
+  "globals": {
+    "chrome": "readonly"
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/eslint-recommended"
+  ],
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "plugins": [
+    "react",
+    "react-hooks",
+    "@typescript-eslint"
+  ],
+  "rules": {
+    // TEMPORARY
+    // "@typescript-eslint/no-use-before-define": "off",
+    // "react-hooks/exhaustive-deps": "off",
+    //
+    "no-console": "warn",
+    "indent": [
+      "warn",
+      3,
+      {
+        "SwitchCase": 1
+      }
+    ],
+    "function-call-argument-newline": [
+      "warn",
+      "consistent"
+    ],
+    "object-property-newline": [
+      "warn",
+      {
+        "allowMultiplePropertiesPerLine": true
+      }
+    ],
+    "array-element-newline": [
+      "warn",
+      "consistent"
+    ],
+    "space-infix-ops": "warn",
+    "linebreak-style": [
+      "warn",
+      "windows"
+    ],
+    "quotes": [
+      "warn",
+      "single"
+    ],
+    "semi": [
+      "warn",
+      "always"
+    ],
+    "switch-colon-spacing": "warn",
+    "no-empty-pattern": "warn",
+    "no-empty-function": "warn",
+    // error with class/type imports
+    "no-unused-vars": [
+      "off"
+    ],
+    "react/prop-types": [
+      "warn",
+      {
+        "skipUndeclared": true
+      }
+    ],
+    "func-style": [
+      "error",
+      "expression"
+    ],
+    "space-before-blocks": "warn",
+    "no-useless-rename": "warn",
+    "semi-style": [
+      "warn",
+      "last"
+    ],
+    "no-extra-semi": "warn",
+    "comma-dangle": [
+      "warn",
+      "always-multiline"
+    ],
+    "no-var": "error",
+    "eqeqeq": "error"
+  }
+}
