@@ -1,7 +1,26 @@
-## README FROM ORIGIN - WILL CHANGE IN FUTURE
+## THIS WILL CHANGE IN FUTURE
+
+Project created for personal use - helps me organize, and easier collect information from job offers.
+
+**The project will most likely not be supported after I find a job**
+_hopefully soon 😜_
+
+### RoadMap:
+- Unit tests
+- Offer status column -- _feature_
+- Adjust width of columns -- _feature_
+- Sort by column -- _feature_
+- Change history -- _feature_
+- Restore backup from json -- _feature_
+- Row height -- _bug_
+- Keyboard shortcuts - _feature, bug_
+- Styling adjustments - _UX bug_
+- Easy-filling - automatically fill cell with text selection -- _feature_
+- Add support for more apps (currently only justjoin.it and nofluffjobs.com) -- _feature_
+- Code refactor -- _blocked by vscode refactor extension project_
 
 <!-- <img src="src/assets/img/icon-128.png" width="64"/> -->
-
+<!-- 
 # Chrome Extension Boilerplate with React 17 and Webpack 5
 
 [![npm](https://img.shields.io/npm/v/chrome-extension-boilerplate-react)](https://www.npmjs.com/package/chrome-extension-boilerplate-react)
@@ -146,4 +165,4 @@ ApiCall({ key: secrets.key });
 
 ---
 
-Michael Xieyang Liu | [Website](https://lxieyang.github.io)
+Michael Xieyang Liu | [Website](https://lxieyang.github.io) -->
