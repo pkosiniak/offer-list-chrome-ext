@@ -4,4 +4,10 @@ export const validateIndex = <T>(
 
 export const indexValidator = <T>(
    index: T | number,
-): [ number, boolean] => [+index, validateIndex(index) ];
+): [number, boolean] => {
+   const validate = typeof index === 'number' || typeof index === 'string'
+      ? +index
+      : NaN;
+
+   return [validate, validateIndex(validate)];
+};
