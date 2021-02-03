@@ -6,7 +6,7 @@ import LinkListItem from './LinkListItem';
 import { CellWidth, ChildrenExportType, ListCellBodyProps } from '../shared/types';
 import * as P from '../shared/parts';
 import ListCell from '../ListCell';
-import { getHostnameFromUrl } from '../../../../../pages/utils/getHostnameFromUrl';
+import { getHostnameFromUrl } from '../../../../../utils/getHostnameFromUrl';
 
 type LinkCellBodyProps = ListCellBodyProps<
    OfferLink,

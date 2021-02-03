@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import { useReducer } from 'react';
-import { deepCompare } from '../../utils/deepCompare';
-import { deepCopy } from '../../utils/deepCopy';
+import { deepCompare } from '../utils/deepCompare';
+import { deepCopy } from '../utils/deepCopy';
 import { useID } from './useID';
 
 type Reducer<S extends {}, A extends S> = (state: S, action: A) => S

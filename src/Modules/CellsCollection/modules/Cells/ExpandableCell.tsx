@@ -1,5 +1,5 @@
 import React, { ReactNode, useEffect, useReducer, useRef } from 'react';
-import { useRefEffect } from '../../../../pages/utils/useRefEffect';
+import { useRefEffect } from '../../../../hooks/useRefEffect';
 import { onLongPress } from '../../../../utils/onLongPress';
 import OkButton from './components/OkButton';
 import * as P from './shared/parts';
@@ -7,8 +7,8 @@ import { ExpandableCellState, WidthType } from './shared/types';
 import CancelButton from './components/CancelButton';
 import { expandableStateReducer } from './localStore/reducers';
 import { expandableAction } from './localStore/actions';
-import { usePrevProps } from '../../../../pages/utils/usePrevProps';
-import { useCreateLocalStore } from '../../../../pages/utils/useReducerLogger';
+import { usePrevProps } from '../../../../hooks/usePrevProps';
+import { useCreateLocalStore } from '../../../../hooks/useReducerLogger';
 const { setRefHeight, setIsDisabled, setIsExpanded, setIsActive } = expandableAction;
 
 interface ExpandableCellProps extends WidthType {

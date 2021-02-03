@@ -1,5 +1,5 @@
 import React, { SetStateAction, useEffect, useState } from 'react';
-import { usePrevProps } from '../../../../pages/utils/usePrevProps';
+import { usePrevProps } from '../../../../hooks/usePrevProps';
 import BasicCell from './BasicCell';
 import * as P from './shared/parts';
 import { CellWidth, WidthType } from './shared/types';

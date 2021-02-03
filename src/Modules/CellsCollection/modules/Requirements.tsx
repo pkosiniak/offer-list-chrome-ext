@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useReducerEffect } from '../../../pages/utils/useReducerEffect';
+import { useReducerEffect } from '../../../hooks/useReducerEffect';
 import { Offer, StackRequirements } from '../../../types/job';
 import ExpandableCell from './Cells/ExpandableCell';
 import RequirementsCellBody from './Cells/RequirementsCellBody/RequirementsCellBody';
@@ -7,7 +7,7 @@ import { DispatchType } from '../types';
 import { requirementCellReducer } from './Cells/localStore/reducers';
 import { LIST_CELL } from './Cells/localStore/types';
 import { OFFER } from '../LocalStore/types';
-import { usePrevProps } from '../../../pages/utils/usePrevProps';
+import { usePrevProps } from '../../../hooks/usePrevProps';
 import { CellWidth, CollectionProps } from './Cells/shared/types';
 
 type RequirementsProps = CollectionProps & Pick<Offer, 'requirements'>

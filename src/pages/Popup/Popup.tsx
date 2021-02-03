@@ -1,7 +1,7 @@
 import React from 'react';
 import { MESSAGE_TYPE, OriginType, SenderType } from '../../types/message';
 import { messageSender } from '../../utils/messages/messageSender';
-import { useUUID } from '../utils/useUUID';
+import { useUUID } from '../../hooks/useUUID';
 // import './Popup.css';
 import * as P from './parts';
 

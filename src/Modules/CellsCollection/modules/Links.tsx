@@ -1,12 +1,12 @@
 import React, { useEffect, useReducer, useState } from 'react';
-import { useReducerEffect } from '../../../pages/utils/useReducerEffect';
+import { useReducerEffect } from '../../../hooks/useReducerEffect';
 import { Offer, OfferLink } from '../../../types/job';
 import ExpandableCell from './Cells/ExpandableCell';
 import LinkCellBody from './Cells/LinkCellBody/LinkCellBody';
 import { linkCellReducer } from './Cells/localStore/reducers';
 import { LIST_CELL } from './Cells/localStore/types';
 import { OFFER } from '../LocalStore/types';
-import { usePrevProps } from '../../../pages/utils/usePrevProps';
+import { usePrevProps } from '../../../hooks/usePrevProps';
 import { CellWidth, CollectionProps } from './Cells/shared/types';
 
 type LinksProps = CollectionProps & Pick<Offer, 'links'>;

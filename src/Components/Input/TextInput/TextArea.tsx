@@ -1,7 +1,7 @@
 import React, { TextareaHTMLAttributes, useEffect, useRef, useState } from 'react';
-import { useID } from '../../../pages/utils/useID';
-import { usePrevProps } from '../../../pages/utils/usePrevProps';
-import { useRefEffect } from '../../../pages/utils/useRefEffect';
+import { useID } from '../../../hooks/useID';
+import { usePrevProps } from '../../../hooks/usePrevProps';
+import { useRefEffect } from '../../../hooks/useRefEffect';
 import * as P from '../parts';
 
 interface TextAreaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {

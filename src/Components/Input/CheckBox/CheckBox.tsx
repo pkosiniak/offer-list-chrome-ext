@@ -1,5 +1,5 @@
 import React, { HTMLAttributes, useState, InputHTMLAttributes } from 'react';
-import { useID } from '../../../pages/utils/useID';
+import { useID } from '../../../hooks/useID';
 import * as P from './parts';
 
 interface ActiveStateProps extends InputHTMLAttributes<HTMLInputElement> {

@@ -1,6 +1,6 @@
 import { Dispatch, useEffect, useReducer } from 'react';
-import { deepCompare } from '../../utils/deepCompare';
-import { deepCopy } from '../../utils/deepCopy';
+import { deepCompare } from '../utils/deepCompare';
+import { deepCopy } from '../utils/deepCopy';
 import { usePrevProps } from './usePrevProps';
 import { useCreateLocalStore } from './useReducerLogger';
 

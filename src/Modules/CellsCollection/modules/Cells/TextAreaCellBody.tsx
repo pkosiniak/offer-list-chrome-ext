@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Box from '../../../../Components/Box/Box';
-import { useMapPropsToState } from '../../../../pages/utils/useMapPropsToState';
+import { useMapPropsToState } from '../../../../hooks/useMapPropsToState';
 import * as P from './shared/parts';
 import { ExpandableCellState } from './shared/types';
 

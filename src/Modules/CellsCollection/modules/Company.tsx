@@ -5,8 +5,8 @@ import TextInputCell from './Cells/TextInputCell';
 import ExpandableCell from './Cells/ExpandableCell';
 import TextAreaCellBody from './Cells/TextAreaCellBody';
 import { OFFER } from '../LocalStore/types';
-import { useMapPropsToState } from '../../../pages/utils/useMapPropsToState';
-import { usePrevProps } from '../../../pages/utils/usePrevProps';
+import { useMapPropsToState } from '../../../hooks/useMapPropsToState';
+import { usePrevProps } from '../../../hooks/usePrevProps';
 import { expandableAction } from './Cells/localStore/actions';
 import { CollectionProps } from './Cells/shared/types';
 

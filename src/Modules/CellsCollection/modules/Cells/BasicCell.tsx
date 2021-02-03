@@ -1,6 +1,6 @@
 import React, { ReactNode, useEffect, useRef, useState } from 'react';
-import { useMapPropsToState } from '../../../../pages/utils/useMapPropsToState';
-import { usePrevProps } from '../../../../pages/utils/usePrevProps';
+import { useMapPropsToState } from '../../../../hooks/useMapPropsToState';
+import { usePrevProps } from '../../../../hooks/usePrevProps';
 import { onLongPress } from '../../../../utils/onLongPress';
 import CancelButton from './components/CancelButton';
 import DeleteButton from './components/DeleteButton';
