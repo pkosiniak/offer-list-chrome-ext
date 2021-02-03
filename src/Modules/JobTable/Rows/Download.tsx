@@ -52,7 +52,7 @@ export const Download: React.FC<DownloadProps> = ({
             </DownloadArrow>
             {'BACKUP'}
          </DownloadButton>
-         <a ref={ref} />
+         <a ref={ref} style={{display: 'none'}} />
       </>
    );
 };

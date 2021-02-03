@@ -5,8 +5,6 @@ import { messageSender } from '../utils/messages/messageSender';
 import { messageListener } from '../utils/messages/messageListener';
 import { useUUID } from './useUUID';
 
-// const { runtime } = chrome;
-
 
 export const useOfferListDidUpdate = (
    originType: OriginType, uuid?: UUIDType,
@@ -18,7 +16,6 @@ export const useOfferListDidUpdate = (
          const { type, sender: origin, message: msg } = message;
          if (type !== MESSAGE_TYPE.OFFER_LIST_DID_UPDATE)
             return;
-         // console.log(!origin.originalSender?.requireException && origin.originalSender?.uuid === sender.uuid, origin, sender);
          if (!origin.originalSender?.requireException && origin.originalSender?.uuid === sender.uuid)
             return;
          if (typeof msg === 'string')
