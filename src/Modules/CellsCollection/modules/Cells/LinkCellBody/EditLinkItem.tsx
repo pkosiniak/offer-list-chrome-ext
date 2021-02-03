@@ -3,7 +3,7 @@ import { OfferLink } from '../../../../../types/job';
 import DeleteButton from '../components/DeleteButton';
 import { PickExpandableCellStateIsExpandedAndWidth } from '../shared/types';
 import * as P from '../shared/parts';
-import { getHostnameFromUrl } from '../../../../../pages/utils/getHostnameFromUrl';
+import { getHostnameFromUrl } from '../../../../../utils/getHostnameFromUrl';
 
 interface EditLinkItemProps extends PickExpandableCellStateIsExpandedAndWidth {
    link: OfferLink,

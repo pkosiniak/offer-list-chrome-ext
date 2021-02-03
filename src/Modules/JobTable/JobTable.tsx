@@ -1,6 +1,6 @@
 import React from 'react';
 import Table from '../../Components/Table/Table';
-import { useOfferListDidUpdate } from '../../pages/utils/useOfferDidUpdate';
+import { useOfferListDidUpdate } from '../../hooks/useOfferDidUpdate';
 import { Job } from '../../types/job';
 import { OriginType } from '../../types/message';
 import ControlRow from './Rows/ControlRow';

@@ -1,7 +1,6 @@
 import { Offer, OfferList } from '../../../types/job';
 import { Message, OriginType, PartialMessage } from '../../../types/message';
 import { messageResponder } from '../../../utils/messages/messageSender';
-import { sendMessageToTab } from '../../utils/sendMessageToTab';
 import { UUID } from '../UUID';
 import { setOfferList } from './storageWorker';
 

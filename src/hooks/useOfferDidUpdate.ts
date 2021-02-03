@@ -1,8 +1,8 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { Job, OfferList } from '../../types/job';
-import { Message, MESSAGE_TYPE, OriginType, PartialMessage, SenderType, UUIDType } from '../../types/message';
-import { messageSender } from '../../utils/messages/messageSender';
-import { messageListener } from '../../utils/messages/messageListener';
+import { Job, OfferList } from '../types/job';
+import { Message, MESSAGE_TYPE, OriginType, PartialMessage, SenderType, UUIDType } from '../types/message';
+import { messageSender } from '../utils/messages/messageSender';
+import { messageListener } from '../utils/messages/messageListener';
 import { useUUID } from './useUUID';
 
 // const { runtime } = chrome;

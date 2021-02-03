@@ -11,12 +11,12 @@ import Salary from './modules/Salary';
 import Notes from './modules/Notes';
 import { Message, MESSAGE_TYPE, Sender, SenderType, UUIDType } from '../../types/message';
 import { OFFER, OfferAction } from './LocalStore/types';
-import { useReducerEffect } from '../../pages/utils/useReducerEffect';
+import { useReducerEffect } from '../../hooks/useReducerEffect';
 import Remove from './modules/Remove';
 import { messageSender } from '../../utils/messages/messageSender';
 import { messageListener } from '../../utils/messages/messageListener';
 import { SendToOption } from '../../utils/messages/types';
-import { usePrevProps } from '../../pages/utils/usePrevProps';
+import { usePrevProps } from '../../hooks/usePrevProps';
 
 interface CellsCollectionProps extends Partial<Job> {
 
