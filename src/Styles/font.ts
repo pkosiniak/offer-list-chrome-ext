@@ -5,7 +5,6 @@ const fontCss = (size: number) => css`
    font-size: ${size}px;
 `;
 
-
 export const font = {
    medium: fontCss(16),
 };

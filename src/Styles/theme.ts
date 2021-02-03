@@ -57,7 +57,6 @@ export const scrollBar = css`
 
    ::-webkit-scrollbar-thumb{
       ${composition.darkLighter}
-      /* color: ${colorGradient(0, 50)} */
    }
 
    ::-webkit-scrollbar-corner{
@@ -98,12 +97,7 @@ export const scrollBar = css`
             }
          }
       }
-      
    }
-   /* ::-webkit-scrollbar-track-piece {
-      color: red;
-      background-color: green;
-   } */
 `;
 
 

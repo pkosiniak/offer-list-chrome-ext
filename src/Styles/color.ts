@@ -1,5 +1,3 @@
-import { css } from 'styled-components';
-
 export const color = {
    react: '#282c34',
    link: '#8f8fef',
@@ -23,9 +21,3 @@ export const color = {
    darkest8: '#2228',
    black: '#000',
 };
-// // link
-// rgb(0, 0, 238)
-// // active
-// rgb(255, 0, 0)
-// //visited
-// rgb(85, 26, 139)
