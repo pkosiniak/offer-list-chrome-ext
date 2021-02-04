@@ -107,15 +107,14 @@ export const onGetOfferByURL = (
    sender: Sender,
 ) => {
    const { offerList } = getState();
-   const offer = offerList.offerList.find(
+   const offers = offerList.offerList.filter(
       offer => !!offer.links?.find(
          link => link.url === url,
       ),
    );
-   // console.log(offerList.offerList);
-   bgMessageRespondWithOffer({
+   bgMessageResponder({
       type: MESSAGE_TYPE.GET_OFFER_BY_URL_RESPONSE,
-      message: offer || {},
+      message: offers || [],
       sender: sender,
    });
 };

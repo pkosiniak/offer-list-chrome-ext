@@ -11,7 +11,8 @@ import { contentSendMessage } from '../contentMessageSender';
 import { getNoFluffOffer } from '../noFluffQueries';
 import * as P from './parts';
 import { messageListener } from '../../../../utils/messages/messageListener';
-import Button from '../../../../Components/Button/Button';
+import { getOfferByUrl } from '../../../../utils/getOfferByUrl';
+import { getHostnameFromUrl } from '../../../../utils/getHostnameFromUrl';
 
 const { runtime } = chrome;
 
@@ -19,16 +20,24 @@ interface OfferInfoRowProps {
    url: string
 }
 
+const preFillNewOffer = (newOffer: Offer, url: string): Offer => {
+   const links = newOffer.links ?? [{ url, name: getHostnameFromUrl(url, 'link'), isAvailable: true }];
+   return {
+      ...newOffer,
+      links,
+   };
+};
 
 const OfferInfoRow: React.FC<OfferInfoRowProps> = ({
    url,
 }) => {
-   const [offer, setOffer] = useState<Offer>({});
+   const [offerList, setOfferList] = useState<OfferList>([]);
+   const [newOffer, setNewOffer] = useState<Offer | undefined>(preFillNewOffer({}, url));
    useEffect(() => {
-      const listener = (message: Message<Offer>) => {
+      const listener = (message: Message<OfferList>) => {
          if (message.type !== MESSAGE_TYPE.GET_OFFER_BY_URL_RESPONSE)
             return;
-         setOffer(message.message);
+         setOfferList(message.message);
       };
       runtime.onMessage.addListener(listener);
       contentSendMessage(MESSAGE_TYPE.GET_OFFER_BY_URL, url);
@@ -37,30 +46,31 @@ const OfferInfoRow: React.FC<OfferInfoRowProps> = ({
       };
    }, []);
 
-   const isOfferValid = (offer: Offer) => !!offer.links?.[0].url && !!offer.company?.name;
+   const isOfferValid = (offer?: Offer) => offer && !!offer.links?.[0].url && !!offer.company?.name;
 
-   const onGet = () => {
-      const newOffer = (
-         isJustJoin(getJustJoinOffer) ||
-         isNoFluff(getNoFluffOffer)
-      ) as Offer | false;
-      newOffer && setOffer(newOffer);
-   };
+   const getOfferInfo = () => (
+      isJustJoin(getJustJoinOffer) ||
+      isNoFluff(getNoFluffOffer)
+   ) as Offer | false;
 
-   const onAppend = () => {
+   const appendOffer = (offerInfo: Offer) => {
       messageListener((message: Message<OfferList>) => {
          const { type, sender, message: msg } = message;
          if (type !== MESSAGE_TYPE.OFFER_LIST_DID_UPDATE) return;
-         const id = msg.map(offer => +(offer.id || -1)).sort((a, b) => a - b)[msg.length - 1];
-         const updateOffer = msg.find(offer => offer.id === '' + id);
-         sender.originalSender?.uuid === UUID && id && setOffer(updateOffer || {});
-         // updateOffer && remover();
+         if (sender.originalSender?.uuid !== UUID) return;
+         const offersMatchUrl = getOfferByUrl(msg, url);
+         if (!offersMatchUrl.length) return;
+         setOfferList(offersMatchUrl);
+         setNewOffer(offersMatchUrl.length ? void 0 : preFillNewOffer({}, url));
       });
-      contentSendMessage(MESSAGE_TYPE.OFFER_LIST_APPEND, offer);
+      contentSendMessage(MESSAGE_TYPE.OFFER_LIST_APPEND, offerInfo);
    };
-   const onGetOffer = () => (
-      isOfferValid(offer) ? onAppend : onGet
-   )();
+
+   const onGetOffer = () => {
+      const offerInfo = getOfferInfo() || {};
+      setNewOffer(offerInfo);
+      isOfferValid(offerInfo) && appendOffer(offerInfo);
+   };
 
    const onRefresh = () => contentSendMessage(
       MESSAGE_TYPE.GET_OFFER_BY_URL, url, true,
@@ -69,18 +79,32 @@ const OfferInfoRow: React.FC<OfferInfoRowProps> = ({
    return (
       <P.Wrapper>
          <P.InnerWrapper>
-            {(isNoFluff() || isJustJoin()) && !offer.id && (
+            {(isNoFluff() || isJustJoin()) ? (
                <P.GetInfo
-                  text={isOfferValid(offer) ? 'ADD' : 'GET INFO'}
+                  text={newOffer ? '🔍 GET OFFER INFO' : '➕'}
                   onClick={onGetOffer}
                />
+            ) : (
+               <P.GetInfo
+                  text={'➕ ADD OFFER INFO'}
+                  onClick={() => appendOffer(preFillNewOffer(newOffer || {}, url))}
+               />
             )}
-            {offer.id && (
+            {offerList.length >= 0 && (
                <P.Refresh text={'↻'} onClick={onRefresh} />
             )}
             <Table>
                <HeadingRow />
-               <OfferRow offer={offer} sender={{ originType: OriginType.Tab, uuid: UUID }} zIndex={1} />
+               {(newOffer ? offerList.concat(newOffer) : offerList).map(
+                  (offer, index, list) => (
+                     <OfferRow
+                        key={index}
+                        offer={offer}
+                        sender={{ originType: OriginType.Tab, uuid: UUID }}
+                        zIndex={list.length - index}
+                     />
+                  ),
+               )}
             </Table>
          </P.InnerWrapper>
       </P.Wrapper>
