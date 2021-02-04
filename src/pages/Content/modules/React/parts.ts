@@ -4,7 +4,7 @@ import Button from '../../../../Components/Button/Button';
 import { color } from '../../../../Styles/color';
 import { theme } from '../../../../Styles/theme';
 
-export const pushHeight = 100;
+export const pushHeight = 120;
 
 
 export const Wrapper = styled(Box)`
@@ -26,7 +26,9 @@ export const InnerWrapper = styled.div`
 `;
 
 export const GetInfo = styled(Button)`
-   
+   white-space: normal;
+   max-width: min-content;
+   line-height: 1.5em;
 `;
 
 export const Refresh = styled(Button)`
