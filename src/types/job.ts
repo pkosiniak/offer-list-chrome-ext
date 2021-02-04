@@ -31,4 +31,12 @@ export type Job = {
 }
 
 export type Offer = Partial<Job>
-export type OfferList = Offer[]
+export type OfferList = Offer[];
+
+export type ExportOfferList = {
+   offerList: OfferList,
+   meta: {
+      note: string | null,
+      timestamp: number,
+   }
+}

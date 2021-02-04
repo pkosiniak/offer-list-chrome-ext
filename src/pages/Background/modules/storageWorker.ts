@@ -7,7 +7,7 @@ import { updateOfferListStoreAction } from '../store/offerList/actions';
 const { storage } = chrome;
 
 export const getOfferList = (dispatch: Dispatch<OfferListStoreAction>) => {
-   storage.sync.get(STORAGE.OFFER_LIST, ({ offerList }) => {
+   storage.local.get(STORAGE.OFFER_LIST, ({ offerList }) => {
       dispatch(
          updateOfferListStoreAction(offerList ? Array.from(offerList) : []),
       );
@@ -15,5 +15,5 @@ export const getOfferList = (dispatch: Dispatch<OfferListStoreAction>) => {
 };
 
 export const setOfferList = (offerList: OfferList) => {
-   storage.sync.set({ offerList });
+   storage.local.set({ offerList });
 };

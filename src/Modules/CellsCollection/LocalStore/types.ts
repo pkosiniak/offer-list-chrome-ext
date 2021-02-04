@@ -1,4 +1,4 @@
-import { Job } from '../../../types/job';
+import { Offer } from '../../../types/job';
 
 export enum OFFER {
    ID = 'OFFER_ID',
@@ -15,5 +15,5 @@ export enum OFFER {
 
 type Action = { type: OFFER }
 
-export type OfferState = Partial<Job> 
+export type OfferState = Offer
 export type OfferAction = OfferState & Action;
