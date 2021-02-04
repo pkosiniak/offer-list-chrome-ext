@@ -32,3 +32,7 @@ export const Wrapper = styled.div`
 export const Label = styled.label`
    
 `;
+
+export const FileInput = styled.input`
+  
+`;

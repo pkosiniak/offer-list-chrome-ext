@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import styled from 'styled-components';
 import Button from '../../../Components/Button/Button';
-import { OfferList } from '../../../types/job';
+import { OfferList, ExportOfferList } from '../../../types/job';
 
 
 export const DownloadArrow = styled.div`
@@ -25,14 +25,15 @@ export const Download: React.FC<DownloadProps> = ({
       const note = prompt('Add note?');
       const timestamp = new Date(Date.now());
       const dateName = `${timestamp.toLocaleDateString().replaceAll('.', '-')}_${timestamp.getHours()}-${timestamp.getMinutes()}`;
+      const storedOfferList: ExportOfferList = {
+         offerList,
+         meta: {
+            note,
+            timestamp: timestamp.getTime(),
+         },
+      };
       const file = new Blob(
-         [JSON.stringify({
-            offerList,
-            meta: {
-               note,
-               timestamp: timestamp.getTime(),
-            },
-         })],
+         [JSON.stringify(storedOfferList)],
          { type: 'application/json' },
       );
       const element = document.createElement('a');
@@ -52,7 +53,7 @@ export const Download: React.FC<DownloadProps> = ({
             </DownloadArrow>
             {'BACKUP'}
          </DownloadButton>
-         <a ref={ref} style={{display: 'none'}} />
+         <a ref={ref} style={{ display: 'none' }} />
       </>
    );
 };

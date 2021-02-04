@@ -10,4 +10,4 @@ console.log('Put the background scripts here.');
 const store = createAppStore();
 getOfferList(store.dispatch);
 
-backgroundMessageListener(store, UUID);
+backgroundMessageListener(store);

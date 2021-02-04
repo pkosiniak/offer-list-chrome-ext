@@ -8,31 +8,11 @@ import { OfferListStoreAction } from '../store/offerList/types';
 import { messageListener } from '../../../utils/messages/messageListener';
 import backup from '../store/backup.json';
 
-const { runtime, storage } = chrome;
-
-// const updateOfferList = (offer: Partial<Job>) => {
-//    storage.sync.get(STORAGE.OFFER_LIST, ({ offerList }) => {
-//       const updated = (offerList ? Array.from(offerList) : []) as Partial<Job>[];
-//       const toUpdate = updated.findIndex(job => job.company?.name === offer.company?.name && job.position?.name === offer.position?.name);
-//       toUpdate > 0 ? updated[toUpdate] = offer : updated.push({ ...offer, id: updated.length + 1 + '' });
-//       storage.sync.set({ offerList: updated }, () => {
-//          runtime.sendMessage({ type: MESSAGE_TYPE.OFFER_LIST_DID_UPDATE, message: updated });
-//       });
-//    });
-// };
-
-
 export const backgroundMessageListener = (
    { getState, dispatch }: Store<CombinedState<StoreType>, OfferListStoreAction>,
-   uuid: string,
 ) => messageListener(
    (message: Message<any>) => {
-      // eslint-disable-next-line no-console
-      // console.log(message);
       switch (message.type) {
-         // case MESSAGE_TYPE.APPEND_JOB_DETAILS:
-         //    updateOfferList(message.message);
-         //    break;
          case MESSAGE_TYPE.OFFER_LIST_GET:
             LC.onOfferListGet(
                getState(),

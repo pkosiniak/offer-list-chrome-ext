@@ -6,8 +6,6 @@ interface HeadingRowProps {
 
 }
 
-
-
 const HeadingRow: React.FC<HeadingRowProps> = ({ }) => {
    return (
       <Row
