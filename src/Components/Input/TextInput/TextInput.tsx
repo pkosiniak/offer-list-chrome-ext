@@ -1,4 +1,4 @@
-import React, { InputHTMLAttributes, useState } from 'react';
+import React, { forwardRef, ForwardRefRenderFunction, InputHTMLAttributes, useState } from 'react';
 import { useID } from '../../../hooks/useID';
 import * as P from '../parts';
 
@@ -11,16 +11,17 @@ interface TextInputProps extends InputHTMLAttributes<HTMLInputElement> {
 
 
 
-const TextInput: React.FC<TextInputProps> = ({
+const TextInput: ForwardRefRenderFunction<HTMLInputElement, TextInputProps> = ({
    // multiline,
    id,
    label,
    ...rest
-}) => {
+}, ref) => {
    const ID = useID({ id, prefix: 'textInput' }); //useState(id || 'input_' + Math.floor(Math.random() * 10 ** 8));
 
    const Component = (
       <P.StyledInput
+         ref={ref}
          id={ID}
          {...rest}
       />
@@ -40,4 +41,4 @@ const TextInput: React.FC<TextInputProps> = ({
 };
 
 
-export default TextInput;
+export default forwardRef(TextInput);

@@ -30,7 +30,7 @@ export const Wrapper = styled.div`
 `;
 
 export const Label = styled.label`
-   
+   ${theme.dark}
 `;
 
 export const FileInput = styled.input`
