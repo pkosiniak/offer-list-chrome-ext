@@ -30,14 +30,19 @@ const showMap = () => {
 export const disposeMapButton = () => {
    const button = document.createElement('button');
    let state = true;
+   const timeout = setTimeout(() => {
+      state && button.click();
+   }, 5000);
    button.onclick = function () {
       state = !state;
       state ? showMap() : disposeMap();
       button.innerText = `🗺${state ? '❌' : '✔'}`;
+      clearTimeout(timeout);
    };
    button.innerText = `🗺${state ? '❌' : '✔'}`;
    button.setAttribute('style', 'position: fixed; top: 152px; right: 0px; z-index: 10000;');
    document.body.appendChild(button);
+
 };
 
 const removeWidget = () => {
