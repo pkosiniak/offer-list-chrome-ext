@@ -5,7 +5,6 @@ interface WrapperProps {
    vertical?: boolean;
 }
 
-
 export const BoxWrapper = styled.div<WrapperProps>`
    display: flex;
    flex-direction: ${({ vertical: isVertical }) => isVertical ? 'column' : 'row'};
@@ -18,7 +17,6 @@ interface BoxProps extends WrapperProps {
 }
 
 type BoxPropsType = BoxProps & HTMLAttributes<HTMLDivElement>
-type RefType = { forwardedRef: ForwardedRef<HTMLDivElement> }
 
 const Box: ForwardRefRenderFunction<HTMLDivElement, BoxPropsType>  = ({
    vertical,
@@ -34,8 +32,5 @@ const Box: ForwardRefRenderFunction<HTMLDivElement, BoxPropsType>  = ({
       </BoxWrapper>
    );
 };
-
-
-// const withRefBox: ForwardRefRenderFunction<HTMLDivElement, BoxPropsType> = (props, ref) => <Box forwardedRef={ref} {...props} />;
 
 export default forwardRef<HTMLDivElement, BoxPropsType>(Box);
