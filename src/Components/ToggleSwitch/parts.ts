@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { color } from '../../../Styles/color';
+import { color } from '../../Styles/color';
 
 const size = 20;
 const borderSize = 4;
@@ -26,7 +26,6 @@ export const LabelWrapper = styled.label<IsCheckedType>`
    border: ${borderSize}px solid;
    ${onCheckedChangeLabel}
    transition: all 1s ease;
-   /* margin-left: 8px; */
 `;
 
 export const HiddenInput = styled.input`
