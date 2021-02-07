@@ -6,13 +6,13 @@ import { deleteItemAtIndex, replaceItemAtIndex } from '../../../utils/arrayRepla
 import { updateOfferListStoreAction } from '../store/offerList/actions';
 import { OfferListStoreAction } from '../store/offerList/types';
 import { StoreType } from '../store/rootReducer';
-import { bgMessageResponder, bgMessageRespondWithOffer } from './messageResponder';
+import { offerListMessageResponder, offerMessageRespond } from './messageResponder';
 
 
 export const onOfferListGet = (
    store: StoreType,
    sender: Sender,
-) => bgMessageResponder({
+) => offerListMessageResponder({
    type: MESSAGE_TYPE.OFFER_LIST_GET_RESPONSE,
    message: store.offerList.offerList,
    sender,
@@ -24,7 +24,7 @@ export const onOfferListSet = (
    sender: Sender,
 ) => {
    dispatch(updateOfferListStoreAction(offerList));
-   bgMessageResponder({
+   offerListMessageResponder({
       type: MESSAGE_TYPE.OFFER_LIST_DID_UPDATE,
       message: offerList,
       sender,
@@ -44,7 +44,7 @@ export const onOfferListUpdateAt = (
    isValid && dispatch(
       updateOfferListStoreAction(replaceItemAtIndex(offerList, index, offer)),
    );
-   bgMessageResponder({
+   offerListMessageResponder({
       type: MESSAGE_TYPE.OFFER_LIST_DID_UPDATE,
       message: isValid
          ? getState().offerList.offerList
@@ -69,7 +69,7 @@ export const onOfferListRemoveAt = (
       updateOfferListStoreAction(deleteItemAtIndex(offerList, index)),
    );
 
-   bgMessageResponder({
+   offerListMessageResponder({
       type: MESSAGE_TYPE.OFFER_LIST_DID_UPDATE,
       message: isValid
          ? getState().offerList.offerList
@@ -94,7 +94,7 @@ export const onOfferListAppend = (
          }]),
       ),
    );
-   bgMessageResponder({
+   offerListMessageResponder({
       type: MESSAGE_TYPE.OFFER_LIST_DID_UPDATE,
       message: getState().offerList.offerList,
       sender,
@@ -112,8 +112,8 @@ export const onGetOfferByURL = (
          link => link.url === url,
       ),
    );
-   bgMessageResponder({
-      type: MESSAGE_TYPE.GET_OFFER_BY_URL_RESPONSE,
+   offerListMessageResponder({
+      type: MESSAGE_TYPE.OFFER_LIST_GET_BY_URL_RESPONSE,
       message: offers || [],
       sender: sender,
    });

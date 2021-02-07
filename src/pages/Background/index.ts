@@ -1,13 +1,12 @@
-/* eslint-disable no-console */
 import { backgroundMessageListener } from './modules/messageListener';
 import { createAppStore } from './store/store';
-import { getOfferList } from './modules/storageWorker';
-import { UUID } from './UUID';
+import { getOfferList, getSettings } from './modules/storageWorker';
 
-console.log('This is the background page.');
-console.log('Put the background scripts here.');
+// eslint-disable-next-line no-console
+console.log('\nThis is the background page.\n');
 
 const store = createAppStore();
 getOfferList(store.dispatch);
+getSettings(store.dispatch);
 
 backgroundMessageListener(store);
