@@ -20,3 +20,8 @@ const CopyButton: React.FC<CopyButtonProps> = ({ onClick, isCopied }) => {
 };
 
 export default CopyButton;
+
+// display: flex;
+//     flex-direction: column;
+//     flex-grow: 1;
+//     padding: 8px;
