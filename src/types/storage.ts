@@ -1,3 +1,5 @@
 export enum STORAGE {
-   OFFER_LIST = 'offerList'
+   OFFER_LIST = 'offerList',
+   SETTINGS = 'settings'
 }
+
