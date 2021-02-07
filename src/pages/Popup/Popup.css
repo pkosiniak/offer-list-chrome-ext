@@ -1,11 +1,31 @@
 .App {
-  position: absolute;
-  top: 0px;
-  bottom: 0px;
-  left: 0px;
-  right: 0px;
-  text-align: center;
-  height: 100%;
-  padding: 10px;
-  background-color: #282c34;
+   position: absolute;
+   top: 0px;
+   bottom: 0px;
+   left: 0px;
+   right: 0px;
+   text-align: center;
+   height: 100%;
+   padding: 8px 0;
+   background-color: #282c34;
+}
+
+.toggleSwitchWrapper {
+   justify-content: space-evenly;
+   flex-grow: 1;
+   height: 100%;
+   padding: 0 8px;
+   /* border: 1px solid #666; */
+}
+
+.toggleSwitchLabel {
+   flex-grow: 1;
+   padding: 4px;
+}
+
+.textInputWrapper {
+   display: flex;
+   flex-direction: column;
+   flex-grow: 1;
+   padding: 0 8px;
 }
