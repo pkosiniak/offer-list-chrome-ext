@@ -9,9 +9,5 @@ export enum OFFER_LIST_STORE {
 export interface OfferListStoreState {
    offerList: OfferList
  }
-type StateWithAction = OfferListStoreState & Action<OFFER_LIST_STORE>;
 
-
-export type OfferListStoreAction = StateWithAction
-
-export { };
+export type OfferListStoreAction = OfferListStoreState & Action<OFFER_LIST_STORE>;
