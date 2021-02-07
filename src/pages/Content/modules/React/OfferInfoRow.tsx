@@ -4,7 +4,6 @@ import HeadingRow from '../../../../Modules/JobTable/Rows/HeadingRow';
 import OfferRow from '../../../../Modules/JobTable/Rows/OfferRow';
 import { Offer, OfferList } from '../../../../types/job';
 import { Message, MESSAGE_TYPE, OriginType } from '../../../../types/message';
-import { UUID } from '../../UUID';
 import { isJustJoin, isNoFluff } from '../helpers/helpers';
 import { getJustJoinOffer } from '../justJoinQueries';
 import { contentSendMessage } from '../contentMessageSender';
@@ -13,11 +12,15 @@ import * as P from './parts';
 import { messageListener } from '../../../../utils/messages/messageListener';
 import { getOfferByUrl } from '../../../../utils/getOfferByUrl';
 import { getHostnameFromUrl } from '../../../../utils/getHostnameFromUrl';
+import { SettingsType } from '../../../../types/settings';
 
 const { runtime } = chrome;
 
 interface OfferInfoRowProps {
-   url: string
+   url: string,
+   uuid: string,
+   settings: SettingsType,
+   showInfoRow: boolean,
 }
 
 const preFillNewOffer = (newOffer: Offer, url: string): Offer => {
@@ -30,17 +33,29 @@ const preFillNewOffer = (newOffer: Offer, url: string): Offer => {
 
 const OfferInfoRow: React.FC<OfferInfoRowProps> = ({
    url,
+   uuid,
+   settings,
+   showInfoRow,
 }) => {
+   // const [show, setShow] = useState(showInfoRow);
+   // useEffect(() => {
+   //    const remover = messageListener<boolean>(({ type, message }) => {
+   //       if (type !== MESSAGE_TYPE.TOGGLE_OFFER_INFO_ROW) return;
+   //       setShow(message);
+   //    });
+   //    return remover;
+   // }, []);
+
    const [offerList, setOfferList] = useState<OfferList>([]);
    const [newOffer, setNewOffer] = useState<Offer | undefined>(preFillNewOffer({}, url));
    useEffect(() => {
       const listener = (message: Message<OfferList>) => {
-         if (message.type !== MESSAGE_TYPE.GET_OFFER_BY_URL_RESPONSE)
+         if (message.type !== MESSAGE_TYPE.OFFER_LIST_GET_BY_URL_RESPONSE)
             return;
          setOfferList(message.message);
       };
       runtime.onMessage.addListener(listener);
-      contentSendMessage(MESSAGE_TYPE.GET_OFFER_BY_URL, url);
+      contentSendMessage(MESSAGE_TYPE.OFFER_LIST_GET_BY_URL, url);
       return () => {
          runtime.onMessage.removeListener(listener);
       };
@@ -57,7 +72,7 @@ const OfferInfoRow: React.FC<OfferInfoRowProps> = ({
       messageListener((message: Message<OfferList>) => {
          const { type, sender, message: msg } = message;
          if (type !== MESSAGE_TYPE.OFFER_LIST_DID_UPDATE) return;
-         if (sender.originalSender?.uuid !== UUID) return;
+         if (sender.originalSender?.uuid !== uuid) return;
          const offersMatchUrl = getOfferByUrl(msg, url);
          if (!offersMatchUrl.length) return;
          setOfferList(offersMatchUrl);
@@ -73,11 +88,13 @@ const OfferInfoRow: React.FC<OfferInfoRowProps> = ({
    };
 
    const onRefresh = () => contentSendMessage(
-      MESSAGE_TYPE.GET_OFFER_BY_URL, url, true,
+      MESSAGE_TYPE.OFFER_LIST_GET_BY_URL, url, true,
    );
 
    return (
-      <P.Wrapper>
+      <P.Wrapper
+      // style={{display: show ? 'flex' : 'none'}}
+      >
          <P.InnerWrapper>
             {(isNoFluff() || isJustJoin()) ? (
                <P.GetInfo
@@ -100,7 +117,7 @@ const OfferInfoRow: React.FC<OfferInfoRowProps> = ({
                      <OfferRow
                         key={index}
                         offer={offer}
-                        sender={{ originType: OriginType.Tab, uuid: UUID }}
+                        sender={{ originType: OriginType.Tab, uuid }}
                         zIndex={list.length - index}
                      />
                   ),

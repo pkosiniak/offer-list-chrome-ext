@@ -1,3 +1,5 @@
 import { getUUID } from '../../utils/getUUID';
 
-export const UUID = getUUID();
+const UUID = getUUID();
+
+export { UUID };
