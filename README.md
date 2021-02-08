@@ -17,6 +17,7 @@ _hopefully soon 😜_
 - Easy-filling - automatically fill cell with text selection -- _feature_
 - Add support for more apps (currently only justjoin.it and nofluffjobs.com) -- _feature_
 - Code refactor -- _blocked by vscode refactor extension project_
+- Other features that will come in development/testing/using process
 
 <!-- <img src="src/assets/img/icon-128.png" width="64"/> -->
 <!-- 
