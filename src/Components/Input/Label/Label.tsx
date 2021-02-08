@@ -35,17 +35,14 @@ const Label: React.FC<LabelProps> = ({
    labelProps,
    children,
 }) => {
-   const ref = useRef<HTMLLabelElement>(null);
-   const isInside = !!inputPosition.match('inside');
-   const Label = isInside
-      ? (<>
+   const Label = inputPosition.match('inside')
+      && (<>
          {inputPosition === 'insideBefore' && children}
          <InnerWrapper>
             {label}
          </InnerWrapper>
          {inputPosition === 'insideAfter' && children}
-      </>)
-      : null;
+      </>);
 
    return label !== undefined
       ? (
@@ -54,7 +51,6 @@ const Label: React.FC<LabelProps> = ({
          >
             {inputPosition === 'before' && children}
             <StyledLabel
-               ref={ref}
                htmlFor={id}
                {...labelProps}
             >
