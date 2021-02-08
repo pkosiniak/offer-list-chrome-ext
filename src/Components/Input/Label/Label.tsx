@@ -1,6 +1,7 @@
 import React, { HTMLAttributes, useRef } from 'react';
 import * as P from '../parts';
 import styled from 'styled-components';
+import { LabelWrapper } from '../ToggleSwitch/parts';
 
 export interface LabelProps {
    label?: string,
@@ -15,6 +16,17 @@ const Wrapper = styled(P.Wrapper)`
    align-items: center;
 `;
 
+const StyledLabel = styled(P.Label)`
+   display: flex;
+   justify-content: space-between;
+`;
+
+const InnerWrapper = styled.span`
+   display: flex;
+   flex-grow: 1;
+   justify-content: center;
+`;
+
 const Label: React.FC<LabelProps> = ({
    label,
    id,
@@ -24,22 +36,30 @@ const Label: React.FC<LabelProps> = ({
    children,
 }) => {
    const ref = useRef<HTMLLabelElement>(null);
+   const isInside = !!inputPosition.match('inside');
+   const Label = isInside
+      ? (<>
+         {inputPosition === 'insideBefore' && children}
+         <InnerWrapper>
+            {label}
+         </InnerWrapper>
+         {inputPosition === 'insideAfter' && children}
+      </>)
+      : null;
+
    return label !== undefined
       ? (
          <Wrapper
-            onClick={wrapperProps?.onClick || (() => ref.current?.click())}
             {...wrapperProps}
          >
             {inputPosition === 'before' && children}
-            <P.Label
+            <StyledLabel
                ref={ref}
                htmlFor={id}
                {...labelProps}
             >
-               {inputPosition === 'insideBefore' && children}
-               {label}
-               {inputPosition === 'insideAfter' && children}
-            </P.Label>
+               {Label}
+            </StyledLabel>
             {inputPosition === 'after' && children}
          </Wrapper>
       ) : (

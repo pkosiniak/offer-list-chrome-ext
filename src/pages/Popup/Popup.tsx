@@ -26,12 +26,14 @@ const code = 'document.getElementById("extensionContainer")?.style.display';
 const Popup = () => {
 
    const [isShowOffer, setIsShowOffer] = useState(false);
-   chrome.tabs.query({ active: true, currentWindow: true }, result => {
-      const id = result[0].id;
-      id && chrome.tabs.executeScript({ code }, result => {
-         setIsShowOffer(!!result[0] && result[0] === 'block');
+   useEffect(() => {
+      chrome.tabs.query({ active: true, currentWindow: true }, result => {
+         const id = result[0].id;
+         id && chrome.tabs.executeScript({ code }, result => {
+            setIsShowOffer(!!result[0] && result[0] === 'block');
+         });
       });
-   });
+   }, []);
 
    const sender = useSender(OriginType.Popup);
 
@@ -42,11 +44,10 @@ const Popup = () => {
          !prev,
          { toActiveTab: true },
       );
-      return !prev;
+      setIsShowOffer(!prev);
    };
 
    const [settings, setSettings] = useState<SettingsType>();
-   const prevSettings = usePrevProps(settings);
    useEffect(() => {
       return getSettingsListener((settings) => setSettings(settings), sender);
    }, []);
@@ -63,21 +64,19 @@ const Popup = () => {
       setSettings({ ...current, autoToggle: !current.autoToggle });
    };
 
-   const linkedInRef = useRef<HTMLInputElement>(null);
-   const githubRef = useRef<HTMLInputElement>(null);
 
    const [linkedInCopy, setLinkedInCopy] = useState(false);
    const [githubCopy, setGithubCopy] = useState(false);
 
-   console.log('settings, prevSettings', settings, prevSettings);
+   // console.log('settings, prevSettings', settings, prevSettings);
    return (
       <P.Wrapper v>
          <P.LineWrapper>
             <P.StyledToggleSwitch
                label={'TOGGLE OFFER ROW'}
-               inputPosition={'after'}
+               inputPosition={'insideAfter'}
                isChecked={isShowOffer}
-               setIsChecked={() => setIsShowOffer(sendShowOfferInfoRow)}
+               setIsChecked={() => sendShowOfferInfoRow(isShowOffer)}
                wrapperProps={{ className: 'toggleSwitchWrapper' }}
                labelProps={{ className: 'toggleSwitchLabel' }}
             />
@@ -85,6 +84,7 @@ const Popup = () => {
          <P.LineWrapper>
             <P.StyledToggleSwitch
                label={'AUTO TOGGLE OFFER ROW'}
+               inputPosition={'insideAfter'}
                isChecked={!!settings?.autoToggle}
                setIsChecked={() => settings && sendAutoToggle(settings)}
                wrapperProps={{ className: 'toggleSwitchWrapper' }}
@@ -100,23 +100,6 @@ const Popup = () => {
                setGithubCopy(false);
             }}
          />
-         {/* <P.LineWrapper h>
-            <TextInput
-               ref={linkedInRef}
-               readOnly
-               label={'LinkedIn'}
-               defaultValue={'https://www.linkedin.com/in/pawel-kosiniak/'}
-            />
-            <CopyButton
-               onClick={() => {
-                  linkedInRef.current?.select();
-                  document.execCommand('copy');
-                  setLinkedInCopy(true);
-                  setGithubCopy(false);
-               }}
-               isCopied={linkedInCopy}
-            />
-         </P.LineWrapper> */}
          <CopyRow
             label={'GitHub'}
             text={'https://github.com/pkosiniak'}
