@@ -11,7 +11,6 @@ _hopefully soon 😜_
 - Adjust width of columns -- _feature_
 - Sort by column -- _feature_
 - Change history -- _feature_
-- Restore backup from json -- _feature_
 - Row height -- _bug_
 - Keyboard shortcuts - _feature, bug_
 - Styling adjustments - _UX bug_
