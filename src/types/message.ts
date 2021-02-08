@@ -35,6 +35,11 @@ export enum OriginType {
    Options = 'Options'
 }
 
+export type OfferByURL = string | {
+   url: string,
+   byName: string,
+}
+
 export type SenderType = {
    uuid: string,
    originType: OriginType,

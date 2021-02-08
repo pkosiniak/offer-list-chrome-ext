@@ -63,7 +63,7 @@ export const scrollBar = css`
       ${composition.darkLighter}
    }
 
-   ::-webkit-scrollbar-button {
+   /* ::-webkit-scrollbar-button {
       :single-button {
          border: 8.5px solid ${color.darker};
          :horizontal {
@@ -97,7 +97,7 @@ export const scrollBar = css`
             }
          }
       }
-   }
+   } */
 `;
 
 

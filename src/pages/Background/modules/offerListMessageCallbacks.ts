@@ -1,6 +1,6 @@
 import { Dispatch, CombinedState } from 'redux';
 import { Job, Offer, OfferList } from '../../../types/job';
-import { Message, MESSAGE_TYPE, Sender } from '../../../types/message';
+import { Message, MESSAGE_TYPE, OfferByURL, Sender } from '../../../types/message';
 import { indexValidator, validateIndex } from '../../../utils/validateIndex';
 import { deleteItemAtIndex, replaceItemAtIndex } from '../../../utils/arrayReplaceRemove';
 import { updateOfferListStoreAction } from '../store/offerList/actions';
@@ -85,7 +85,7 @@ export const onOfferListAppend = (
    sender: Sender,
 ) => {
    const { offerList } = getState().offerList;
-   const lastId = offerList.map(offer => +(offer.id || -1)).sort((a,b) => a - b)[offerList.length - 1] || 0;
+   const lastId = offerList.map(offer => +(offer.id || -1)).sort((a, b) => a - b)[offerList.length - 1] || 0;
    dispatch(
       updateOfferListStoreAction(
          offerList.concat([{
@@ -103,18 +103,25 @@ export const onOfferListAppend = (
 
 export const onGetOfferByURL = (
    getState: () => CombinedState<StoreType>,
-   url: string,
+   url: OfferByURL,
    sender: Sender,
 ) => {
    const { offerList } = getState();
+   const URL = typeof url === 'string' ? url : url.url;
    const offers = offerList.offerList.filter(
       offer => !!offer.links?.find(
-         link => link.url === url,
+         link => link.url === URL,
       ),
    );
+   const offersByName = typeof url === 'object'
+      && url.byName
+      && offerList.offerList.filter(
+         offer => offer.company?.name === url.byName,
+      );
+   const response = offersByName ? offers.concat(offersByName) : offers;
    offerListMessageResponder({
       type: MESSAGE_TYPE.OFFER_LIST_GET_BY_URL_RESPONSE,
-      message: offers || [],
+      message: response || [],
       sender: sender,
    });
 };

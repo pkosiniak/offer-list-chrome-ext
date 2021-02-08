@@ -3,7 +3,7 @@ import Table from '../../../../Components/Table/Table';
 import HeadingRow from '../../../../Modules/JobTable/Rows/HeadingRow';
 import OfferRow from '../../../../Modules/JobTable/Rows/OfferRow';
 import { Offer, OfferList } from '../../../../types/job';
-import { Message, MESSAGE_TYPE, OriginType } from '../../../../types/message';
+import { Message, MESSAGE_TYPE, OfferByURL, OriginType } from '../../../../types/message';
 import { isJustJoin, isNoFluff } from '../helpers/helpers';
 import { getJustJoinOffer } from '../justJoinQueries';
 import { contentSendMessage } from '../contentMessageSender';
@@ -37,15 +37,6 @@ const OfferInfoRow: React.FC<OfferInfoRowProps> = ({
    settings,
    showInfoRow,
 }) => {
-   // const [show, setShow] = useState(showInfoRow);
-   // useEffect(() => {
-   //    const remover = messageListener<boolean>(({ type, message }) => {
-   //       if (type !== MESSAGE_TYPE.TOGGLE_OFFER_INFO_ROW) return;
-   //       setShow(message);
-   //    });
-   //    return remover;
-   // }, []);
-
    const [offerList, setOfferList] = useState<OfferList>([]);
    const [newOffer, setNewOffer] = useState<Offer | undefined>(preFillNewOffer({}, url));
    useEffect(() => {
@@ -87,10 +78,13 @@ const OfferInfoRow: React.FC<OfferInfoRowProps> = ({
       isOfferValid(offerInfo) && appendOffer(offerInfo);
    };
 
-   const onRefresh = () => contentSendMessage(
-      MESSAGE_TYPE.OFFER_LIST_GET_BY_URL, url, true,
-   );
-
+   const onRefresh = () => {
+      const offerInfo = getOfferInfo();
+      const byName = offerInfo && offerInfo.company?.name;
+      contentSendMessage<OfferByURL>(
+         MESSAGE_TYPE.OFFER_LIST_GET_BY_URL, byName ? { url, byName } : url, true,
+      );
+   };
    return (
       <P.Wrapper
       // style={{display: show ? 'flex' : 'none'}}
