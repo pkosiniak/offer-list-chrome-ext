@@ -13,6 +13,8 @@ const pushDownNoFLuff = (
       'body > nfj-root > nfj-layout > nfj-navbar > header > nav',
    );
    nav?.setAttribute('style', `top: ${showInfoRow ? pushHeight : 0}px`);
+   const container = document.querySelector('body > nfj-root > nfj-layout > nfj-main-content > div > div > div.main-content__outlet.mb-5.pb-5');
+   container?.setAttribute('style', `top: ${showInfoRow ? pushHeight : 0}px`);
    const listener = (() => {
       window.scrollY > 73 &&
          document.querySelector('#floatingBar')?.setAttribute(
