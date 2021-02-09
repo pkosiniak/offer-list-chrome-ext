@@ -6,7 +6,7 @@ Project created for personal use - helps me organize, and easier collect informa
 _hopefully soon 😜_
 
 ### RoadMap:
-- Unit tests
+- Unit tests*
 - Offer status column -- _feature_
 - Adjust width of columns -- _feature_
 - Sort by column -- _feature_
@@ -18,6 +18,8 @@ _hopefully soon 😜_
 - Add support for more apps (currently only justjoin.it and nofluffjobs.com) -- _feature_
 - Code refactor -- _blocked by vscode refactor extension project_
 - Other features that will come in development/testing/using process
+
+<i style="font-size: 10px;">*Next project will be in TDD... I promise!</i>
 
 <!-- <img src="src/assets/img/icon-128.png" width="64"/> -->
 <!-- 
