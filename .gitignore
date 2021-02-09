@@ -2,6 +2,7 @@
 /src/**/unused
 /.unused
 /.vscode
+*.note.*
 *.old.*
 
 # dependencies
