@@ -26,7 +26,8 @@
   ],
   "permissions": [
     "storage",
-    "activeTab"
+    "activeTab",
+    "unlimitedStorage"
   ],
   "web_accessible_resources": [],
   "manifest_version": 2,
