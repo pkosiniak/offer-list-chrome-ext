@@ -20,13 +20,14 @@ const queryTabs = <T>(
 
 const sendToTabs = <T>(
    message: Message<T>,
-   to: T.SendToOption,
-) => queryTabs(
-      to === T.SendToOption.AllTabs
-         ? {}
-         : { active: true, currentWindow: true },
-      message,
-   );
+   to: T.SendToOption | number,
+) => typeof to === 'string'
+      ? queryTabs(
+         to === T.SendToOption.AllTabs
+            ? {}
+            : { active: true, currentWindow: true },
+         message,
+      ) : tabs.sendMessage(to, message);
 
 const sendToRuntime = <T>(message: Message<T>) => runtime.sendMessage(message);
 
@@ -50,14 +51,16 @@ const withMessage = <T>(
    toOptions?: T.MessageSenderOptions | T.SendToOption,
 ) => {
    const {
-      toRuntime, toActiveTab, toAllTabs,
+      toRuntime, toActiveTab, toAllTabs, toTabId,
    } = asMessageSenderOptions(toOptions);
    toRuntime && sendToRuntime(message);
-   if (!(toActiveTab || toAllTabs)) return;
+   if (!(toActiveTab || toAllTabs || toTabId)) return;
    if (toActiveTab)
       return sendToTabs(message, T.SendToOption.ActiveTab);
    if (toAllTabs)
       return sendToTabs(message, T.SendToOption.AllTabs);
+   if (toTabId !== undefined)
+      return sendToTabs(message, toTabId);
 };
 
 export const messageSender = <T>(

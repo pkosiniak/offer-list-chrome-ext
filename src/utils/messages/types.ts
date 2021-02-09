@@ -10,6 +10,7 @@ export type MessageSenderOptions = {
    toActiveTab?: boolean,
    toAllTabs?: boolean,
    toRuntime?: boolean,
+   toTabId?: number,
    // to?: SendToOption,
 }
 
