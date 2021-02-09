@@ -22,12 +22,12 @@ export type Job = {
    id: string,
    company: Company,
    position: Position,
-   salary: string | [number, number],
+   salary: string,
    links: OfferLink[],
    requirements: StackRequirements[],
    notes: string,
-   exposeDate: Date | string,
-   applicationDate: Date | string,
+   exposeDate: Date,
+   applicationDate: Date,
 }
 
 export type Offer = Partial<Job>
