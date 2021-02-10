@@ -10,6 +10,7 @@ export const headingRowNames = {
    Notes: 'Notes',
    ExposeDate: 'Expose Date',
    ApplicationDate: 'Application Date',
+   Status: 'Status',
    Remove: 'Remove',
 };
 
