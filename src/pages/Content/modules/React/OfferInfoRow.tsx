@@ -37,8 +37,19 @@ const OfferInfoRow: React.FC<OfferInfoRowProps> = ({
    settings,
    showInfoRow,
 }) => {
+   const getOfferInfo = () => (
+      isJustJoin(getJustJoinOffer) ||
+      isNoFluff(getNoFluffOffer)
+   ) as Offer | false;
+
    const [offerList, setOfferList] = useState<OfferList>([]);
    const [newOffer, setNewOffer] = useState<Offer | undefined>(preFillNewOffer({}, url));
+   const [offerInfo, setOfferInfo] = useState<Offer | undefined>();
+
+   useEffect(() => {
+      setOfferInfo(getOfferInfo() || void 0);
+   }, []);
+
    useEffect(() => {
       const listener = (message: Message<OfferList>) => {
          if (message.type !== MESSAGE_TYPE.OFFER_LIST_GET_BY_URL_RESPONSE)
@@ -46,18 +57,17 @@ const OfferInfoRow: React.FC<OfferInfoRowProps> = ({
          setOfferList(message.message);
       };
       runtime.onMessage.addListener(listener);
-      contentSendMessage(MESSAGE_TYPE.OFFER_LIST_GET_BY_URL, url);
+      const byName = offerInfo && offerInfo.company?.name;
+      contentSendMessage(
+         MESSAGE_TYPE.OFFER_LIST_GET_BY_URL,
+         byName ? { url, byName } : url,
+      );
       return () => {
          runtime.onMessage.removeListener(listener);
       };
    }, []);
 
    const isOfferValid = (offer?: Offer) => offer && !!offer.links?.[0].url && !!offer.company?.name;
-
-   const getOfferInfo = () => (
-      isJustJoin(getJustJoinOffer) ||
-      isNoFluff(getNoFluffOffer)
-   ) as Offer | false;
 
    const appendOffer = (offerInfo: Offer) => {
       messageListener((message: Message<OfferList>) => {
@@ -73,13 +83,12 @@ const OfferInfoRow: React.FC<OfferInfoRowProps> = ({
    };
 
    const onGetOffer = () => {
-      const offerInfo = getOfferInfo() || {};
-      setNewOffer(offerInfo);
-      isOfferValid(offerInfo) && appendOffer(offerInfo);
+      const info = offerInfo || getOfferInfo() || {};
+      setNewOffer(info);
+      isOfferValid(info) && appendOffer(info);
    };
 
    const onRefresh = () => {
-      const offerInfo = getOfferInfo();
       const byName = offerInfo && offerInfo.company?.name;
       contentSendMessage<OfferByURL>(
          MESSAGE_TYPE.OFFER_LIST_GET_BY_URL, byName ? { url, byName } : url, true,

@@ -116,7 +116,10 @@ export const onGetOfferByURL = (
    const offersByName = typeof url === 'object'
       && url.byName
       && offerList.offerList.filter(
-         offer => offer.company?.name === url.byName,
+         offer => offer.company?.name?.toLocaleLowerCase()
+            .match(url.byName.trim().toLocaleLowerCase())
+            || (offer.company?.name && url.byName.trim().toLocaleLowerCase()
+               .match(offer.company.name.toLocaleLowerCase())),
       );
    const response = offersByName ? offers.concat(offersByName) : offers;
    offerListMessageResponder({
