@@ -14,7 +14,18 @@ const pushDownNoFLuff = (
    );
    nav?.setAttribute('style', `top: ${showInfoRow ? pushHeight : 0}px`);
    const container = document.querySelector('body > nfj-root > nfj-layout > nfj-main-content > div > div > div.main-content__outlet.mb-5.pb-5');
-   container?.setAttribute('style', `top: ${showInfoRow ? pushHeight : 0}px`);
+   const container2 = document.querySelector('body > nfj-root > nfj-layout > nfj-main-content > div > div > div.main-content__outlet.mb-5.pb-5 > nfj-posting-details');
+   container?.setAttribute('style', `margin-top: ${showInfoRow ? pushHeight : 0}px`);
+   container2?.setAttribute('style', `margin-top: ${showInfoRow ? pushHeight : 0}px`);
+   const button = document.createElement('button');
+   button.innerText = '✖ Modal';
+   button.setAttribute('style', 'position: fixed; right: 20px; top: 200px; z-index: 10000; font-size: 10px;');
+   button.onclick = () => {
+      (document.querySelector('#btn-close-modal-external') as HTMLButtonElement)?.click();
+   };
+   showInfoRow
+      ? document.body.appendChild(button)
+      : document.body.removeChild(button);
    const listener = (() => {
       window.scrollY > 73 &&
          document.querySelector('#floatingBar')?.setAttribute(
