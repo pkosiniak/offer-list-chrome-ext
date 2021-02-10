@@ -17,6 +17,7 @@ export const offerReducer = (
       notes,
       exposeDate,
       applicationDate,
+      status,
    } = rest;
    switch (type) {
       case T.OFFER.ID:
@@ -63,6 +64,11 @@ export const offerReducer = (
          return {
             ...state,
             applicationDate,
+         };
+      case T.OFFER.STATUS:
+         return {
+            ...state,
+            status,
          };
       case T.OFFER.ALL:
          return {

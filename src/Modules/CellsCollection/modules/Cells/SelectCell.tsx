@@ -1,34 +1,34 @@
 import React from 'react';
+import { OptionType } from '../../../../Components/Input/Select/Select';
 import BasicCell from './BasicCell';
 import * as P from './shared/parts';
 import { CellWidth, WidthType } from './shared/types';
 
-interface TextInputCellProps extends WidthType {
+interface SelectCellProps extends WidthType {
    initValue?: string;
    setValue: (value: string) => void;
-   readOnly?: boolean
+   options: OptionType[]
 }
 
-const TextInputCell: React.FC<TextInputCellProps> = ({
+const SelectCell: React.FC<SelectCellProps> = ({
    width,
    initValue,
+   options,
    setValue,
-   readOnly,
 }) => {
    return (
       <BasicCell
-         readOnly={readOnly}
          setValue={setValue}
          onDelete={() => setValue('')}
          initValue={initValue}
          width={width || CellWidth.Default}
       >
          {({ disabled, setInputValue, inputValue }) => (
-            <P.StyledTextInput
-               readOnly={readOnly}
-               value={inputValue as string || ''}
+            <P.StyledSelect
+               value={inputValue as string}
                width={width}
                disabled={disabled}
+               options={options}
                onChange={({ target }) => setInputValue(target.value)}
             />
          )}
@@ -37,4 +37,4 @@ const TextInputCell: React.FC<TextInputCellProps> = ({
    );
 };
 
-export default TextInputCell;
+export default SelectCell;

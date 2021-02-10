@@ -36,3 +36,7 @@ export const Label = styled.label`
 export const FileInput = styled.input`
   
 `;
+
+export const Select = styled.select`
+   ${commonStyles}
+`;

@@ -10,6 +10,7 @@ import * as T from './types.parts';
 import { borderBold, borderLightBold, theme } from '../../../../../Styles/theme';
 import NumberInput from '../../../../../Components/Input/NumberInput/NumberInput';
 import { color } from '../../../../../Styles/color';
+import Select from '../../../../../Components/Input/Select/Select';
 
 export const StyledTextInput = styled(TextInput) <T.WidthType>`
    :disabled {
@@ -35,6 +36,10 @@ export const StyledTextArea = styled(TextArea) <T.IsExpandedType & Partial<T.IsA
    resize: none;
    ${U.onExpanded}
    ${({ isActive }) => isActive && borderLightBold}
+`;
+
+export const StyledSelect = styled(Select)<T.WidthType>`
+   ${U.getWidth};
 `;
 
 export const StyledDateInput = styled(DateInput) <T.WidthType>`
@@ -74,3 +79,4 @@ export const AddButton = styled(Button)`
 export const RemoveButton = styled(Button)`
    
 `;
+

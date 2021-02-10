@@ -18,6 +18,15 @@ export type Position = {
    level?: string
 }
 
+export enum ApplicationStatus {
+   NotSent = 'Not sent',
+   Sent = 'Sent',
+   Processing = 'Processing',
+   Recruitment = 'Recruitment',
+   Accepted = 'Accepted',
+   Refusal = 'Refusal',
+}
+
 export type Job = {
    id: string,
    company: Company,
@@ -28,6 +37,7 @@ export type Job = {
    notes: string,
    exposeDate: Date,
    applicationDate: Date,
+   status: ApplicationStatus,
 }
 
 export type Offer = Partial<Job>

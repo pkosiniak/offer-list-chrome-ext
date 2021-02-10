@@ -1,5 +1,5 @@
 import { useEffect, useReducer } from 'react';
-import { Job, Offer } from '../../types/job';
+import { ApplicationStatus, Job, Offer } from '../../types/job';
 import { offerReducer } from './LocalStore/reducer';
 import { Dates } from './modules/Dates';
 import Position from './modules/Position';
@@ -17,6 +17,7 @@ import { messageSender } from '../../utils/messages/messageSender';
 import { messageListener } from '../../utils/messages/messageListener';
 import { SendToOption } from '../../utils/messages/types';
 import { usePrevProps } from '../../hooks/usePrevProps';
+import Status from './modules/Status';
 
 interface CellsCollectionProps extends Partial<Job> {
 
@@ -77,16 +78,18 @@ const CellsCollection = (offer: CellsCollectionProps, sender: SenderType, zIndex
       notes,
       exposeDate,
       applicationDate,
+      status,
    } = state;
    return [
       Id({ dispatch, id, zIndex }),
       Links({ dispatch, links, zIndex }),
       ...Company({ dispatch, company, zIndex }),
-      ...Position({ dispatch, position, zIndex  }),
+      ...Position({ dispatch, position, zIndex }),
       Requirements({ dispatch, requirements, zIndex }),
       Salary({ dispatch, salary, zIndex }),
       Notes({ dispatch, notes, zIndex }),
       ...Dates({ dispatch, applicationDate, exposeDate, zIndex }),
+      Status({ dispatch, status: status || (applicationDate && ApplicationStatus.Sent) }),
       Remove({ removeAction: sendRemoveRow }),
    ];
 };
