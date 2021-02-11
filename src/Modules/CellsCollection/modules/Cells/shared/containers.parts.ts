@@ -20,7 +20,7 @@ export const AbsoluteWrapper = styled(Box) <T.AbsoluteWrapperProps>`
 
 export const Placeholder = styled(Box) <T.PlaceholderProps>`
    ${U.getWidth}
-   ${({isDisabled}) => !isDisabled && css`margin-right: 10px` }
+   ${({isDisabled}) => !isDisabled && css`margin-right: 10px;` }
    /* ${U.DEPRECATED_pickWidth} */
 `;
 
