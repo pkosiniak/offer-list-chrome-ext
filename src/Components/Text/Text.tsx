@@ -9,21 +9,30 @@ const Paragraph = styled.p`
    ${theme.dark}
 `;
 
-interface TextProps extends HTMLAttributes<HTMLParagraphElement> {
+const Span = styled.span`
+   ${font.medium}
+   ${theme.dark}
+`;
 
+
+interface TextProps extends HTMLAttributes<HTMLParagraphElement | HTMLSpanElement> {
+   inline?: boolean,
+   text?: string,
 }
 
 const Text: React.FC<TextProps> = ({
+   inline,
+   text,
    children,
    ...rest
-}) => {
-   return (
-      <Paragraph
-         {...rest}
-      >
-         {children}
-      </Paragraph>
-   );
-};
+}) => inline ? (
+   <Span {...rest} >
+      {children || text}
+   </Span>
+) : (
+   <Paragraph {...rest} >
+      { children || text}
+   </Paragraph >
+);
 
 export default Text;
