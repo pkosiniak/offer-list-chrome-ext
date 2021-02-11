@@ -81,7 +81,6 @@ const ExpandableCell: React.FC<ExpandableCellProps> = ({
          <P.Placeholder
             width={width}
             isDisabled={!!isDisabled}
-            isExpanded={!!isExpanded}
          />
          <P.AbsoluteWrapper
             width={width}
