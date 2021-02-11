@@ -7,20 +7,20 @@ import { TR } from './parts';
 interface RowProps {
    isHeading?: boolean,
    columns?: ReactNode[],
-   // style?: CSSProperties,
+   style?: CSSProperties,
    columnStyle?: CSSProperties | CSSProperties[],
 }
 
 const Row: React.FC<RowProps> = ({
    columns,
    isHeading,
-   // style,
+   style,
    columnStyle,
 }) => {
 
 
    return (
-      <TR>
+      <TR style={style}>
          {columns?.map((child, index) => (
             <Column
                key={index}
