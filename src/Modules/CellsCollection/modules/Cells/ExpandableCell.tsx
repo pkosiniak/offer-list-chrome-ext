@@ -15,6 +15,7 @@ interface ExpandableCellProps extends WidthType {
    onOkClick: () => void,
    onCancelClick: () => void,
    zIndex: number,
+   className?: string,
    children: (exportProps: ExpandableCellState) => ReactNode,
 }
 
@@ -23,6 +24,7 @@ const ExpandableCell: React.FC<ExpandableCellProps> = ({
    onCancelClick,
    width,
    zIndex,
+   className,
    children,
 }) => {
    const [state, dispatch] = useReducer(expandableStateReducer, {
@@ -48,7 +50,7 @@ const ExpandableCell: React.FC<ExpandableCellProps> = ({
    const deleteRef = useRef<HTMLButtonElement>(null);
    useEffect(() => {
       const listener = (event: KeyboardEvent) => {
-         console.log(event);
+         // console.log(event);
          switch (event.key) {
             case 'Enter':
                return !event.ctrlKey && okRef.current?.click();
@@ -69,15 +71,17 @@ const ExpandableCell: React.FC<ExpandableCellProps> = ({
       <P.Wrapper
          horizontal
          width={width}
+         className={className}
          extend={1}
          isDisabled={!!isDisabled}
          ref={ref}
-         onFocus={() => console.log('focus')}
-         onFocusCapture={() => console.log('focus capture')}
+         // onFocus={() => console.log('focus')}
+         // onFocusCapture={() => console.log('focus capture')}
       >
          <P.Placeholder
             width={width}
             isDisabled={!!isDisabled}
+            isExpanded={!!isExpanded}
          />
          <P.AbsoluteWrapper
             width={width}
