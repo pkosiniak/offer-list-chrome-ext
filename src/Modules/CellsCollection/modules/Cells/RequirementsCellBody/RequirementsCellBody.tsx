@@ -4,7 +4,7 @@ import { deleteItemAtIndex, replaceItemAtIndex } from '../../../../../utils/arra
 import { StackRequirements } from '../../../../../types/job';
 import RequirementListItem from './RequirementListItem';
 import { ListCellBodyProps } from '../shared/types';
-import ListCell from '../ListCell';
+import ListCell, { DeleteActionCallback, SetActionCallback } from '../ListCell';
 
 type RequirementsCellProps = ListCellBodyProps<
    StackRequirements,
@@ -20,17 +20,19 @@ const RequirementsCell: React.FC<RequirementsCellProps> = ({
    onOkClick,
    expandableState,
 }) => {
+   const setItem: SetActionCallback<StackRequirements> = (
+      requirements, index, requirement,
+   ) => setState(replaceItemAtIndex(requirements, index, requirement));
+
+   const deleteItem: DeleteActionCallback<StackRequirements> = (
+      requirements, index,
+   ) => setState(deleteItemAtIndex(requirements, index));
+
    return (
       <ListCell
          list={state.requirements}
-         setItem={(requirement, index, requirements) => setState({
-            type: T.LIST_CELL.REQUIREMENTS_UPDATE,
-            requirements: replaceItemAtIndex(requirements, index, requirement),
-         })}
-         deleteItem={(index, requirements) => setState({
-            type: T.LIST_CELL.REQUIREMENTS_UPDATE,
-            requirements: deleteItemAtIndex(requirements, index),
-         })}
+         setItem={setItem}
+         deleteItem={deleteItem}
          newItem={newItem}
          setNewItem={setNewItem}
          deleteNewItem={() => setNewItem(void 0)}
@@ -38,11 +40,11 @@ const RequirementsCell: React.FC<RequirementsCellProps> = ({
          onOkClick={onOkClick}
          expandableState={expandableState}
       >
-         {(requirement, setRequirements, deleteRequirement) => (
+         {({ item, setItem, deleteItem }) => (
             <RequirementListItem
-               requirement={requirement}
-               setRequirement={setRequirements}
-               deleteRequirement={deleteRequirement}
+               requirement={item}
+               setRequirement={setItem}
+               deleteRequirement={deleteItem}
                {...expandableState}
             />
          )}

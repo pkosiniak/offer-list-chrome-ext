@@ -1,3 +1,4 @@
+import { OfferLink, StackRequirements } from '../../../../../types/job';
 import * as T from './types';
 
 const setIsActive = (
@@ -46,3 +47,17 @@ export const expandableAction = {
    setIsExpanded,
    setRefHeight,
 };
+
+export const setRequirements = (
+   requirements: StackRequirements[],
+): T.RequirementCellAction => ({
+   type: T.LIST_CELL.REQUIREMENTS_UPDATE,
+   requirements,
+});
+
+export const setLinks = (
+   links: OfferLink[],
+): T.LinkCellAction => ({
+   type: T.LIST_CELL.LINK_UPDATE,
+   links,
+});

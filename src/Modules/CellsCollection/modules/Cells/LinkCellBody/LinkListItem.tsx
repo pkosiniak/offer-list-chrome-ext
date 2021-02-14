@@ -11,7 +11,12 @@ interface ItemProps extends ListItemPickFromExpandable {
 }
 
 const LinkListItem = ({
-   link, setLink, deleteLink, isDisabled, isExpanded, width,
+   link,
+   setLink,
+   deleteLink,
+   isDisabled,
+   isExpanded,
+   width,
 }: ItemProps) => isDisabled
    ? (
       <DisabledLinkItem {...link} />

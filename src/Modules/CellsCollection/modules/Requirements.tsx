@@ -8,6 +8,7 @@ import { LIST_CELL } from './Cells/localStore/types';
 import { OFFER } from '../LocalStore/types';
 import { usePrevProps } from '../../../hooks/usePrevProps';
 import { CellWidth, CollectionProps } from './Cells/shared/types';
+import { setRequirements } from './Cells/localStore/actions';
 
 type RequirementsProps = CollectionProps & Pick<Offer, 'requirements'>
 
@@ -34,11 +35,13 @@ const Requirements = ({
       });
       setNewItem(void 0);
    };
+   const dispatchRequirements = (
+      requirements: StackRequirements[],
+   ) => setState(setRequirements(requirements));
+
    const onCancelClick = () => {
-      prevState?.requirements && setState({
-         type: LIST_CELL.REQUIREMENTS_UPDATE,
-         requirements: prevState?.requirements,
-      });
+      prevState?.requirements
+         && dispatchRequirements(prevState.requirements),
       setNewItem(void 0);
    };
    return (
@@ -53,7 +56,7 @@ const Requirements = ({
                newItem={newItem}
                setNewItem={setNewItem}
                state={state}
-               setState={setState}
+               setState={dispatchRequirements}
                onOkClick={onOkClick}
                expandableState={expandableState}
             />
