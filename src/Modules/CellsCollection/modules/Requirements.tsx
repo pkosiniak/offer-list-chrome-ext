@@ -3,7 +3,6 @@ import { useReducerEffect } from '../../../hooks/useReducerEffect';
 import { Offer, StackRequirements } from '../../../types/job';
 import ExpandableCell from './Cells/ExpandableCell';
 import RequirementsCellBody from './Cells/RequirementsCellBody/RequirementsCellBody';
-import { DispatchType } from '../types';
 import { requirementCellReducer } from './Cells/localStore/reducers';
 import { LIST_CELL } from './Cells/localStore/types';
 import { OFFER } from '../LocalStore/types';
@@ -49,14 +48,14 @@ const Requirements = ({
          onOkClick={onOkClick}
          width={CellWidth.Large}
       >
-         {(props) => (
+         {(expandableState) => (
             <RequirementsCellBody
                newItem={newItem}
                setNewItem={setNewItem}
                state={state}
                setState={setState}
                onOkClick={onOkClick}
-               {...props}
+               expandableState={expandableState}
             />
          )}
       </ExpandableCell>

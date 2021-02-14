@@ -48,14 +48,14 @@ const Links = ({
          zIndex={zIndex || 1}
          width={CellWidth.Large}
       >
-         {({ ...expandableState }) => (
+         {(expandableState) => (
             <LinkCellBody
                state={state}
                setState={setState}
                newItem={newItem}
                setNewItem={setNewItem}
                onOkClick={onOkClick}
-               {...expandableState}
+               expandableState={expandableState}
             />
          )}
       </ExpandableCell>

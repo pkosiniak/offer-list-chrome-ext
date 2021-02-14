@@ -1,13 +1,13 @@
-import React, { PropsWithChildren, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import * as P from './shared/parts';
 import ListActions from './ListAction';
-import { ExpandableCellState } from './shared/types';
+import { WithExpandableState } from './shared/types';
 import { expandableAction } from './localStore/actions';
 
 type SetActionCallback<T> = (item: T, index: number, list: T[]) => void
 type DeleteActionCallback<T> = (index: number, list: T[]) => void
 
-interface LinkCellBodyProps<T> extends ExpandableCellState {
+interface LinkCellBodyProps<T> extends WithExpandableState {
    onOkClick: () => void,
    onAddNewItemClick: () => void,
    list?: T[]
@@ -34,9 +34,8 @@ const LinkCellBody: React.FC<LinkCellBodyProps<any>> = ({
    deleteNewItem,
    onAddNewItemClick,
    onOkClick,
-   zIndex,
    children,
-   ...expandableState
+   expandableState,
 }) => {
    const {
       isExpanded,
@@ -44,6 +43,7 @@ const LinkCellBody: React.FC<LinkCellBodyProps<any>> = ({
       isActive,
       refHeight,
       dispatch,
+      zIndex,
    } = expandableState;
    return (
       <P.ULWrapper

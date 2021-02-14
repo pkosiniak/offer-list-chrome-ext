@@ -1,31 +1,19 @@
-import React, { useState } from 'react';
-import Box from '../../../../Components/Box/Box';
-import { useMapPropsToState } from '../../../../hooks/useMapPropsToState';
+import React, {  } from 'react';
+import { expandableAction as EA } from './localStore/actions';
 import * as P from './shared/parts';
-import { ExpandableCellState } from './shared/types';
+import { WithExpandableState } from './shared/types';
 
-interface TextAreaCellBodyProps extends Pick<
-   ExpandableCellState, 'isDisabled' | 'isExpanded' | 'isActive' | 'zIndex'
-   > {
+interface TextAreaCellBodyProps extends WithExpandableState {
    value?: string,
    onChange: (value: string) => void
-   // disabled: boolean,
-   // isExpanded: boolean,
-   // isActive: boolean
-   setIsActive?: (value: boolean) => void,
-   // zIndex: number
 }
 
 const TextAreaCellBody: React.FC<TextAreaCellBodyProps> = ({
    value,
    onChange,
-   isDisabled,
-   isExpanded,
-   isActive,
-   setIsActive,
-   zIndex,
+   expandableState,
 }) => {
-   // console.log('isExpanded', isExpanded);
+   const { isExpanded, isActive, isDisabled, zIndex, dispatch } = expandableState;
    return (
       <P.StyledTextArea
          value={value}
@@ -35,11 +23,12 @@ const TextAreaCellBody: React.FC<TextAreaCellBodyProps> = ({
          disabled={isDisabled}
          isActive={!!isActive}
          rows={isExpanded ? undefined : 1}
-         onFocus={() => setIsActive && setIsActive(true)}
-         onBlur={() => setIsActive && setIsActive(false)}
+         onFocus={() => dispatch(EA.setIsActive(true))}
+         onBlur={() => dispatch(EA.setIsActive(false))}
          style={{ zIndex: isActive ? zIndex + 2 : zIndex }}
       />
    );
 };
+
 
 export default TextAreaCellBody;

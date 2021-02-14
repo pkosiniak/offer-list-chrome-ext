@@ -17,8 +17,10 @@ export type ExpandableCellState = LS.ExpandableState & {
    dispatch: Dispatch<LS.ExpandableAction>,
    prevState?: LS.ExpandableState,
    zIndex: number,
-   width?: CellWidth
+   width: CellWidth
 }
+
+export type WithExpandableState = { expandableState: ExpandableCellState };
 
 export type BasicChildrenExportType<T> = {
    inputValue?: T,
@@ -32,7 +34,7 @@ export type ListCellBodyProps<Type, State, Action> = {
    onOkClick: () => void,
    newItem?: Type,
    setNewItem: Dispatch<SetStateAction<Type | undefined>>
-} & ExpandableCellState
+} & WithExpandableState
 
 export type ListItemPickFromExpandable = Pick<ExpandableCellState, 'isExpanded' | 'isDisabled'>
    & Required<Pick<ExpandableCellState, 'width'>>
