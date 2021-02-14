@@ -8,8 +8,7 @@ import ListCell, { DeleteActionCallback, SetActionCallback } from '../ListCell';
 
 type RequirementsCellProps = ListCellBodyProps<
    StackRequirements,
-   T.RequirementsCellState,
-   T.RequirementCellAction
+   T.RequirementsCellState
 >
 
 const RequirementsCell: React.FC<RequirementsCellProps> = ({

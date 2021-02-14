@@ -8,8 +8,7 @@ import ListCell, { DeleteActionCallback, SetActionCallback } from '../ListCell';
 
 type LinkCellBodyProps = ListCellBodyProps<
    OfferLink,
-   T.LinkCellState,
-   T.LinkCellAction
+   T.LinkCellState
 >
 
 const LinkCellBody: React.FC<LinkCellBodyProps> = ({
