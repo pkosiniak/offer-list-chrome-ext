@@ -7,8 +7,7 @@ import TextAreaCellBody from './Cells/TextAreaCellBody';
 import { OFFER } from '../LocalStore/types';
 import { useMapPropsToState } from '../../../hooks/useMapPropsToState';
 import { usePrevProps } from '../../../hooks/usePrevProps';
-import { expandableAction } from './Cells/localStore/actions';
-import { CollectionProps } from './Cells/shared/types';
+import { CellWidth, CollectionProps } from './Cells/shared/types';
 
 type CompanyNameProps = CollectionProps & Pick<Offer, 'company'>
 
@@ -28,6 +27,8 @@ const Company = ({ company, dispatch, zIndex }: CompanyNameProps) => {
          })}
       />,
       <ExpandableCell
+         key={headingRowNames.CompanyName}
+         width={CellWidth.Medium}
          zIndex={zIndex || 1}
          onCancelClick={() => setLocation(prevLocation)}
          onOkClick={() => dispatch({
@@ -37,17 +38,12 @@ const Company = ({ company, dispatch, zIndex }: CompanyNameProps) => {
                location,
             },
          })}
-         key={headingRowNames.CompanyName}
       >
-         {({ isDisabled, isExpanded, isActive, dispatch, zIndex }) => (
+         {(expandableState) => (
             <TextAreaCellBody
-               zIndex={zIndex}
                value={location}
                onChange={setLocation}
-               isDisabled={isDisabled}
-               isExpanded={isExpanded}
-               isActive={isActive}
-               setIsActive={(value) => dispatch(expandableAction.setIsActive(value))}
+               expandableState={expandableState}
             />
          )}
       </ExpandableCell>,

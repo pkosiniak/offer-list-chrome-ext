@@ -1,10 +1,10 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React from 'react';
 import * as T from '../localStore/types';
 import { deleteItemAtIndex, replaceItemAtIndex } from '../../../../../utils/arrayReplaceRemove';
 import { StackRequirements } from '../../../../../types/job';
 import RequirementListItem from './RequirementListItem';
-import { CellWidth, ExpandableCellState, ListCellBodyProps } from '../shared/types';
-import ListCell from '../ListCell';
+import { ListCellBodyProps } from '../shared/types';
+import ListCell, { DeleteActionCallback, SetActionCallback } from '../ListCell';
 
 type RequirementsCellProps = ListCellBodyProps<
    StackRequirements,
@@ -18,33 +18,33 @@ const RequirementsCell: React.FC<RequirementsCellProps> = ({
    newItem,
    setNewItem,
    onOkClick,
-   children: _,
-   ...expandableState
+   expandableState,
 }) => {
+   const setItem: SetActionCallback<StackRequirements> = (
+      requirements, index, requirement,
+   ) => setState(replaceItemAtIndex(requirements, index, requirement));
+
+   const deleteItem: DeleteActionCallback<StackRequirements> = (
+      requirements, index,
+   ) => setState(deleteItemAtIndex(requirements, index));
+
    return (
       <ListCell
          list={state.requirements}
-         setItem={(requirement, index, requirements) => setState({
-            type: T.LIST_CELL.REQUIREMENTS_UPDATE,
-            requirements: replaceItemAtIndex(requirements, index, requirement),
-         })}
-         deleteItem={(index, requirements) => setState({
-            type: T.LIST_CELL.REQUIREMENTS_UPDATE,
-            requirements: deleteItemAtIndex(requirements, index),
-         })}
+         setItem={setItem}
+         deleteItem={deleteItem}
          newItem={newItem}
          setNewItem={setNewItem}
          deleteNewItem={() => setNewItem(void 0)}
          onAddNewItemClick={() => setNewItem({ name: '', level: '' })}
          onOkClick={onOkClick}
-         {...expandableState}
+         expandableState={expandableState}
       >
-         {(requirement, setRequirements, deleteRequirement) => (
+         {({ item, setItem, deleteItem }) => (
             <RequirementListItem
-               requirement={requirement}
-               setRequirement={setRequirements}
-               deleteRequirement={deleteRequirement}
-               width={expandableState.width || CellWidth.Default}
+               requirement={item}
+               setRequirement={setItem}
+               deleteRequirement={deleteItem}
                {...expandableState}
             />
          )}

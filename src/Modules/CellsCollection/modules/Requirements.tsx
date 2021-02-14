@@ -3,12 +3,12 @@ import { useReducerEffect } from '../../../hooks/useReducerEffect';
 import { Offer, StackRequirements } from '../../../types/job';
 import ExpandableCell from './Cells/ExpandableCell';
 import RequirementsCellBody from './Cells/RequirementsCellBody/RequirementsCellBody';
-import { DispatchType } from '../types';
 import { requirementCellReducer } from './Cells/localStore/reducers';
 import { LIST_CELL } from './Cells/localStore/types';
 import { OFFER } from '../LocalStore/types';
 import { usePrevProps } from '../../../hooks/usePrevProps';
 import { CellWidth, CollectionProps } from './Cells/shared/types';
+import { setRequirements } from './Cells/localStore/actions';
 
 type RequirementsProps = CollectionProps & Pick<Offer, 'requirements'>
 
@@ -35,11 +35,13 @@ const Requirements = ({
       });
       setNewItem(void 0);
    };
+   const dispatchRequirements = (
+      requirements: StackRequirements[],
+   ) => setState(setRequirements(requirements));
+
    const onCancelClick = () => {
-      prevState?.requirements && setState({
-         type: LIST_CELL.REQUIREMENTS_UPDATE,
-         requirements: prevState?.requirements,
-      });
+      prevState?.requirements
+         && dispatchRequirements(prevState.requirements),
       setNewItem(void 0);
    };
    return (
@@ -49,14 +51,14 @@ const Requirements = ({
          onOkClick={onOkClick}
          width={CellWidth.Large}
       >
-         {(props) => (
+         {(expandableState) => (
             <RequirementsCellBody
                newItem={newItem}
                setNewItem={setNewItem}
                state={state}
-               setState={setState}
+               setState={dispatchRequirements}
                onOkClick={onOkClick}
-               {...props}
+               expandableState={expandableState}
             />
          )}
       </ExpandableCell>

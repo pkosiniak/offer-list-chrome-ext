@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useReducer, useRef } from 'react';
+import React, { ReactNode, useEffect, useRef } from 'react';
 import { useRefEffect } from '../../../../hooks/useRefEffect';
 import { onLongPress } from '../../../../utils/onLongPress';
 import OkButton from './components/OkButton';
@@ -11,12 +11,12 @@ import { usePrevProps } from '../../../../hooks/usePrevProps';
 import { useCreateLocalStore } from '../../../../hooks/useReducerLogger';
 const { setRefHeight, setIsDisabled, setIsExpanded, setIsActive } = expandableAction;
 
-interface ExpandableCellProps extends WidthType {
+interface ExpandableCellProps extends Required<WidthType> {
    onOkClick: () => void,
    onCancelClick: () => void,
    zIndex: number,
    className?: string,
-   children: (exportProps: ExpandableCellState) => ReactNode,
+   children: (expandableState: ExpandableCellState) => ReactNode,
 }
 
 const ExpandableCell: React.FC<ExpandableCellProps> = ({
@@ -27,12 +27,15 @@ const ExpandableCell: React.FC<ExpandableCellProps> = ({
    className,
    children,
 }) => {
-   const [state, dispatch] = useReducer(expandableStateReducer, {
-      isActive: false,
-      isExpanded: false,
-      isDisabled: true,
-      refHeight: undefined,
-   });
+   const [state, dispatch] = useCreateLocalStore(
+      expandableStateReducer,
+      {
+         isActive: false,
+         isExpanded: false,
+         isDisabled: true,
+         refHeight: undefined,
+      },
+   );
    const [ref] = useRefEffect<number, HTMLDivElement>(
       (ref) => dispatch(setRefHeight(
          ref.current?.getBoundingClientRect().height,
@@ -67,6 +70,15 @@ const ExpandableCell: React.FC<ExpandableCellProps> = ({
       ref.current?.addEventListener('keyup', listener);
       return () => ref.current?.removeEventListener('keyup', listener);
    }, []);
+
+   const useExpandableState: ExpandableCellState = {
+      ...state,
+      prevState,
+      dispatch,
+      zIndex,
+      width,
+   };
+
    return (
       <P.Wrapper
          horizontal
@@ -75,8 +87,8 @@ const ExpandableCell: React.FC<ExpandableCellProps> = ({
          extend={1}
          isDisabled={!!isDisabled}
          ref={ref}
-         // onFocus={() => console.log('focus')}
-         // onFocusCapture={() => console.log('focus capture')}
+      // onFocus={() => console.log('focus')}
+      // onFocusCapture={() => console.log('focus capture')}
       >
          <P.Placeholder
             width={width}
@@ -91,7 +103,7 @@ const ExpandableCell: React.FC<ExpandableCellProps> = ({
             style={{ minHeight: refHeight }}
          >
             <P.ExpandableWrapper>
-               {children({ ...state, dispatch, prevState, zIndex, width })}
+               {children(useExpandableState)}
             </P.ExpandableWrapper>
          </P.AbsoluteWrapper>
          <OkButton

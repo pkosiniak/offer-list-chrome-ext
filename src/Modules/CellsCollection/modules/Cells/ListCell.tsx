@@ -1,13 +1,13 @@
-import React, { PropsWithChildren, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import * as P from './shared/parts';
 import ListActions from './ListAction';
-import { ExpandableCellState } from './shared/types';
+import { ListState, WithExpandableState } from './shared/types';
 import { expandableAction } from './localStore/actions';
 
-type SetActionCallback<T> = (item: T, index: number, list: T[]) => void
-type DeleteActionCallback<T> = (index: number, list: T[]) => void
+export type SetActionCallback<T> = (list: T[], index: number, item: T,) => void
+export type DeleteActionCallback<T> = (list: T[], index: number) => void
 
-interface LinkCellBodyProps<T> extends ExpandableCellState {
+interface ListCellBodyProps<T> extends WithExpandableState {
    onOkClick: () => void,
    onAddNewItemClick: () => void,
    list?: T[]
@@ -17,15 +17,11 @@ interface LinkCellBodyProps<T> extends ExpandableCellState {
    setNewItem: (value: T) => void,
    deleteNewItem: () => void,
    children: (
-      item: T,
-      setItem: (item: T) => void,
-      deleteItem: () => void,
-      index: number,
-      list: T[]
+      listState: ListState<T>
    ) => ReactNode,
 }
 
-const LinkCellBody: React.FC<LinkCellBodyProps<any>> = ({
+const ListCellBody = <T,>({
    list,
    setItem,
    deleteItem,
@@ -34,17 +30,32 @@ const LinkCellBody: React.FC<LinkCellBodyProps<any>> = ({
    deleteNewItem,
    onAddNewItemClick,
    onOkClick,
-   zIndex,
    children,
-   ...expandableState
-}) => {
+   expandableState,
+}: ListCellBodyProps<T>) => {
    const {
       isExpanded,
       isDisabled,
       isActive,
       refHeight,
       dispatch,
+      zIndex,
    } = expandableState;
+
+   const createListState = (
+      item: T,
+      index: number,
+      list: T[],
+      setItem: SetActionCallback<T>,
+      deleteItem: DeleteActionCallback<T>,
+   ): ListState<T> => ({
+      item,
+      index,
+      list,
+      setItem: (value) => setItem(list, index, value),
+      deleteItem: () => deleteItem(list, index),
+   });
+
    return (
       <P.ULWrapper
          height={refHeight}
@@ -59,15 +70,9 @@ const LinkCellBody: React.FC<LinkCellBodyProps<any>> = ({
             isDisabled={!!isDisabled}
             isExpanded={!!isExpanded}
             items={
-               list?.map((item, index, list) =>
-                  children(
-                     item,
-                     (value) => setItem(value, index, list),
-                     () => deleteItem(index, list),
-                     index,
-                     list,
-                  ),
-               ) || []
+               (list || []).map((item, index, list) => children(
+                  createListState(item, index, list, setItem, deleteItem),
+               ))
             }
          >
             {!isDisabled && (
@@ -78,13 +83,13 @@ const LinkCellBody: React.FC<LinkCellBodyProps<any>> = ({
                   isActive={isActive}
                   setIsDisabled={() => dispatch(expandableAction.setIsDisabled(true))}
                >
-                  {!!newItem && children(
+                  {!!newItem && children(createListState(
                      newItem,
-                     (value) => setNewItem(value),
-                     () => deleteNewItem(),
                      (list?.length || 0) + 1,
                      [],
-                  )}
+                     (_, __, newItem) => setNewItem(newItem),
+                     deleteNewItem,
+                  ))}
                </ListActions>
             )}
          </P.StyledUL>
@@ -92,4 +97,4 @@ const LinkCellBody: React.FC<LinkCellBodyProps<any>> = ({
    );
 };
 
-export default LinkCellBody;
+export default ListCellBody;

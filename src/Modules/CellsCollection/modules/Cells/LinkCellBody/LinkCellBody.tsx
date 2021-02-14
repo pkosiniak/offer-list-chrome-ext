@@ -1,12 +1,10 @@
-import React, { Dispatch, useEffect, useReducer, useState } from 'react';
+import React from 'react';
 import { OfferLink } from '../../../../../types/job';
 import * as T from '../localStore/types';
 import { deleteItemAtIndex, replaceItemAtIndex } from '../../../../../utils/arrayReplaceRemove';
 import LinkListItem from './LinkListItem';
-import { CellWidth, ChildrenExportType, ListCellBodyProps } from '../shared/types';
-import * as P from '../shared/parts';
-import ListCell from '../ListCell';
-import { getHostnameFromUrl } from '../../../../../utils/getHostnameFromUrl';
+import { ListCellBodyProps } from '../shared/types';
+import ListCell, { DeleteActionCallback, SetActionCallback } from '../ListCell';
 
 type LinkCellBodyProps = ListCellBodyProps<
    OfferLink,
@@ -20,41 +18,33 @@ const LinkCellBody: React.FC<LinkCellBodyProps> = ({
    newItem,
    setNewItem,
    onOkClick,
-   children: _,
-   ...expandableState
+   expandableState,
 }) => {
-   const setItem = (
-      link: OfferLink, index: number, links: OfferLink[],
-   ) => setState({
-      type: T.LIST_CELL.LINK_UPDATE,
-      links: replaceItemAtIndex(
-         links,
-         index,
-         link,
-      ),
-   });
+   const setItem: SetActionCallback<OfferLink> = (
+      links, index, link,
+   ) => setState(replaceItemAtIndex(links, index, link));
+
+   const deleteItem: DeleteActionCallback<OfferLink> = (
+      links, index,
+   ) => setState(deleteItemAtIndex(links, index));
 
    return (
       <ListCell
          list={state.links}
          setItem={setItem}
-         deleteItem={() => (links: OfferLink[], index: number) => setState({
-            type: T.LIST_CELL.LINK_UPDATE,
-            links: deleteItemAtIndex(links, index),
-         })}
+         deleteItem={deleteItem}
          newItem={newItem}
          setNewItem={setNewItem}
          deleteNewItem={() => setNewItem(void 0)}
          onAddNewItemClick={() => setNewItem({ url: '', name: '', isAvailable: true })}
          onOkClick={onOkClick}
-         {...expandableState}
+         expandableState={expandableState}
       >
-         {(link, setLink, deleteDelete) => (
+         {({ item, setItem, deleteItem }) => (
             <LinkListItem
-               link={link as OfferLink}
-               setLink={setLink}
-               deleteLink={deleteDelete}
-               width={expandableState.width || CellWidth.Default}
+               link={item}
+               setLink={setItem}
+               deleteLink={deleteItem}
                {...expandableState}
             />
          )}
