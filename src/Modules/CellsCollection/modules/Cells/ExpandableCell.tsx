@@ -11,13 +11,19 @@ import { usePrevProps } from '../../../../hooks/usePrevProps';
 import { useCreateLocalStore } from '../../../../hooks/useReducerLogger';
 const { setRefHeight, setIsDisabled, setIsExpanded, setIsActive } = expandableAction;
 
+type ExpandableOptions = {
+   expandButtonHidden?: boolean,
+}
+
 interface ExpandableCellProps extends Required<WidthType> {
    onOkClick: () => void,
    onCancelClick: () => void,
    zIndex: number,
    className?: string,
    children: (expandableState: ExpandableCellState) => ReactNode,
+   options?: ExpandableOptions,
 }
+
 
 const ExpandableCell: React.FC<ExpandableCellProps> = ({
    onOkClick,
@@ -25,8 +31,10 @@ const ExpandableCell: React.FC<ExpandableCellProps> = ({
    width,
    zIndex,
    className,
+   options,
    children,
 }) => {
+   const { expandButtonHidden = false } = options || {};
    const [state, dispatch] = useCreateLocalStore(
       expandableStateReducer,
       {
@@ -35,6 +43,7 @@ const ExpandableCell: React.FC<ExpandableCellProps> = ({
          isDisabled: true,
          refHeight: undefined,
       },
+      { useLogger: false },
    );
    const [ref] = useRefEffect<number, HTMLDivElement>(
       (ref) => dispatch(setRefHeight(
@@ -44,10 +53,15 @@ const ExpandableCell: React.FC<ExpandableCellProps> = ({
    const prevState = usePrevProps(state);
 
    const { isActive, isDisabled, isExpanded, refHeight } = state;
-   const onEditActivate = () => dispatch(setIsDisabled(false));
+   const onEditActivate = () => {
+      dispatch(setIsDisabled(false));
+      expandButtonHidden && dispatch(setIsExpanded(true));
+   };
    useEffect(() => {
       dispatch(setIsActive(!isDisabled));
+      expandButtonHidden && dispatch(setIsExpanded(!isDisabled));
    }, [isDisabled]);
+
    const okRef = useRef<HTMLButtonElement>(null);
    const cancelRef = useRef<HTMLButtonElement>(null);
    const deleteRef = useRef<HTMLButtonElement>(null);
@@ -107,18 +121,21 @@ const ExpandableCell: React.FC<ExpandableCellProps> = ({
             </P.ExpandableWrapper>
          </P.AbsoluteWrapper>
          <OkButton
+            ref={okRef}
             isDisabled={isDisabled}
             isActive={isActive}
             setIsDisabled={(value) => dispatch(setIsDisabled(value))}
             onClickCallback={onOkClick}
          />
          <CancelButton
+            ref={cancelRef}
             isDisabled={isDisabled}
             isActive={isActive}
             setIsDisabled={(value) => dispatch(setIsDisabled(value))}
             onClickCallback={onCancelClick}
          />
          <P.ExpandButton
+            style={{ display: expandButtonHidden ? 'none' : void 0 }}
             onClick={() => dispatch(setIsExpanded(!isExpanded))}
             text={isExpanded ? '∆' : '∇'}
          />
@@ -128,91 +145,3 @@ const ExpandableCell: React.FC<ExpandableCellProps> = ({
 
 export default ExpandableCell;
 
-
-/*
-
-interface ExpandableCellProps extends WidthType {
-   onOkClick: () => void,
-   onCancelClick: () => void,
-   children: (exportProps: ChildrenExportType) => ReactNode,
-}
-
-const ExpandableCell: React.FC<ExpandableCellProps> = ({
-   onOkClick,
-   onCancelClick,
-   width,
-   children,
-}) => {
-   // const [isDisabled, setDisabled] = useState(true);
-   // const [isExpanded, setIsExpanded] = useState(false);
-   // const [isActive, setIsActive] = useState(false);
-   // const [ref, refHeight] = useRefEffect<number, HTMLDivElement>(
-   //    (ref, setRefHeight) => setRefHeight(ref.current?.getBoundingClientRect().height),
-   // );
-   const [state, dispatch] = useReducer(expandableStateReducer, {
-      isActive: false,
-      isExpanded: false,
-      isDisabled: true,
-      refHeight: undefined,
-   });
-   const [ref] = useRefEffect<number, HTMLDivElement>(
-      (ref) => dispatch(setRefHeight(
-         ref.current?.getBoundingClientRect().height,
-      )),
-   );
-
-   const { isActive, isDisabled, isExpanded, refHeight } = state;
-   const onEditActivate = () => dispatch(setIsDisabled(false));
-
-   return (
-      <P.Wrapper
-         horizontal
-         width={width}
-         isDisabled={!!isDisabled}
-         ref={ref}
-      >
-         <P.Placeholder
-            width={width}
-            isDisabled={!!isDisabled}
-         />
-         <P.AbsoluteWrapper
-            width={width}
-            isExpanded={!!isExpanded}
-            isDisabled={!!isDisabled}
-            onDoubleClick={onEditActivate}
-            {...onLongPress(onEditActivate, 1000)}
-         >
-            <P.ExpandableWrapper>
-               {children({
-                  disabled: isDisabled,
-                  setDisabled,
-                  isExpanded,
-                  isActive,
-                  setIsActive,
-                  refHeight,
-               })}
-            </P.ExpandableWrapper>
-         </P.AbsoluteWrapper>
-         <OkButton
-            disabled={isDisabled}
-            isActive={isActive}
-            setDisabled={(value) => dispatch(setIsDisabled(value))}
-            onClickCallback={onOkClick}
-         />
-         <CancelButton
-            disabled={isDisabled}
-            isActive={isActive}
-            setDisabled={(value) => dispatch(setIsDisabled(value))}
-            onClickCallback={onCancelClick}
-         />
-         <P.ExpandButton
-            onClick={() => dispatch(setIsExpanded(!isExpanded))}
-            text={isExpanded ? '∆' : '∇'}
-         />
-      </P.Wrapper>
-   );
-};
-
-export default ExpandableCell;
-
-*/
