@@ -1,4 +1,6 @@
+import { Dispatch, SetStateAction } from 'react';
 import { CellWidth } from '../CellsCollection/modules/Cells/shared/types';
+import { SortType } from '../JobTable/types';
 
 export type WidthRange = {
    min: CellWidth,
@@ -6,8 +8,7 @@ export type WidthRange = {
    default: CellWidth
 }
 
-export enum SortDirection {
-   NONE = 'NONE',
-   ASC = 'ASC',
-   DESC = 'DESC'
+export type SortingProps = {
+   sort?: SortType,
+   setSort: Dispatch<SetStateAction<SortType | undefined>>
 }

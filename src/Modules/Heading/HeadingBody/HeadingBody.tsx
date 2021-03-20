@@ -1,11 +1,11 @@
 import React from 'react';
 import { CellWidth } from '../../CellsCollection/modules/Cells/shared/types.parts';
+import { SortOrder } from '../../JobTable/types';
 import * as P from './parts';
-import * as T from '../types';
 
 export interface HeadingBodyProps {
    width: CellWidth,
-   sort: T.SortDirection
+   sort: SortOrder
    filter?: string,
    text: string
 }
@@ -30,14 +30,14 @@ const HeadingBody: React.FC<HeadingBodyProps> = ({
                      width={width}
                   />
                )}
-               {sort !== T.SortDirection.NONE && (
+               {sort !== SortOrder.NONE && (
                   <P.Sort inline>
-                     {sort === T.SortDirection.ASC ? '⇩' : '⇧'}
+                     {sort === SortOrder.ASC ? '⇩' : '⇧'}
                   </P.Sort>
                )}
             </P.BlurWrapper>
          </P.OptionsWrapper>
-         <P.Heading inline>
+         <P.Heading inline width={width}>
             {text}
          </P.Heading>
       </P.Wrapper>

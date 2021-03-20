@@ -11,12 +11,12 @@ export const TBody = styled.tbody`
    
 `;
 export const TR = styled.tr`
-   /* display: flex; */
+
 `;
 export const TH = styled.th`
    ${font.medium}
-   /* display: flex; */
+
 `;
 export const TD = styled.td`
-   /* display: flex; */
+
 `;
