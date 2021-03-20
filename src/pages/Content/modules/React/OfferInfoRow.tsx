@@ -114,7 +114,7 @@ const OfferInfoRow: React.FC<OfferInfoRowProps> = ({
                <P.Refresh text={'↻'} onClick={onRefresh} />
             )}
             <Table>
-               <HeadingRow />
+               <HeadingRow setSort={() => {}}/>
                {(newOffer ? offerList.concat(newOffer) : offerList).map(
                   (offer, index, list) => (
                      <OfferRow

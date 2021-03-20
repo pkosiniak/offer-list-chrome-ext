@@ -1,33 +1,38 @@
 import { } from 'recoil';
 import React, { useState } from 'react';
-import { CellWidth } from '../CellsCollection/modules/Cells/shared/types';
 import * as P from './parts';
-import Select from '../../Components/Input/Select/Select';
-import TextInput from '../../Components/Input/TextInput/TextInput';
 import * as T from './types';
-import EditHeadingCell, { EditHeadingCellProps } from './EditHeadingCell/EditHeadingCell';
+import EditHeadingCell from './EditHeadingCell/EditHeadingCell';
 import HeadingBody, { HeadingBodyProps } from './HeadingBody/HeadingBody';
+import { SortBy, SortOrder } from '../JobTable/types';
+import { useMapPropsToState } from '../../hooks/useMapPropsToState';
 
-interface HeadingCellProps
-   extends HeadingBodyProps, EditHeadingCellProps {
+interface HeadingCellProps extends HeadingBodyProps {
    widthRange: T.WidthRange,
    setFilter: () => void,
-   setSort: () => void
+   setSort: (by: SortBy, order: SortOrder) => void,
+   name: SortBy
 }
 
 const HeadingCell: React.FC<HeadingCellProps> = ({
    text,
+   name,
    width,
-
+   sort,
+   setSort,
 }) => {
-   const [sortState, setSortState] = useState<T.SortDirection>(T.SortDirection.NONE);
+   const [sortState, setSortState] = useMapPropsToState<SortOrder>(sort);
    const [filterState, setFilterState] = useState<string>();
+   const onOkClick = () => {
+      setSort(name, sortState);
+   };
    return (
       <P.Expandable
-         onOkClick={() => { }}
+         onOkClick={onOkClick}
          onCancelClick={() => { }}
          width={width}
-         zIndex={1}
+         zIndex={1000}
+         options={{ expandButtonHidden: true }}
       >
          {({ isExpanded }) => (
             <P.Wrapper v>
