@@ -3,9 +3,9 @@ import Row from '../../../Components/Table/Row';
 import { CellWidth } from '../../CellsCollection/modules/Cells/shared/types';
 import { headingRowNames } from '../../common/common';
 import HeadingCell from '../../Heading/HeadingCell';
-import { SortingProps } from '../../Heading/types';
+import { FilteringProps, SortingProps } from '../../Heading/types';
 import { sortBy } from '../sorting';
-import { SortBy, SortOrder } from '../types';
+import { ColumnKey, FilterKeyType, SortOrder } from '../types';
 
 interface HeadingRowProps {
 
@@ -13,6 +13,7 @@ interface HeadingRowProps {
 
 type HeadingRowPropsType = HeadingRowProps
    & SortingProps
+   & FilteringProps
 
 const widths = [
    CellWidth.XSmall,
@@ -33,20 +34,32 @@ const widths = [
 const HeadingRow: React.FC<HeadingRowPropsType> = ({
    sort,
    setSort,
+   filter,
+   setFilter,
 }) => {
    const setSorting = (
-      by: SortBy,
+      by: ColumnKey,
       order: SortOrder,
    ) => setSort(
       order === SortOrder.NONE
          ? void 0
          : { by, order },
    );
+
+   const setFiltering = (
+      by: ColumnKey,
+      filter: FilterKeyType,
+   ) => setFilter(
+      filter
+         ? { by, filter }
+         : void 0,
+   );
+
    const DANGEROUSLY_getName = (
       text: string,
    ) => Object.keys(sortBy).find(
       key => key.toLowerCase().match(text.toLowerCase()),
-   ) as SortBy;
+   ) as ColumnKey;
 
    return (
       <Row
@@ -60,8 +73,8 @@ const HeadingRow: React.FC<HeadingRowPropsType> = ({
                widthRange={{ min: CellWidth.Small, max: CellWidth.Large, default: widths[index] }}
                sort={sort?.by === DANGEROUSLY_getName(text) && sort?.order || SortOrder.NONE}
                setSort={setSorting}
-               filter={void 0}
-               setFilter={() => { }}
+               filter={filter?.by === DANGEROUSLY_getName(text) ? filter?.filter || '' : ''}
+               setFilter={setFiltering}
             />
          ))}
          style={{ height: 40 }}

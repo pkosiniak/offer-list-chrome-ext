@@ -4,14 +4,14 @@ import * as P from './parts';
 import * as T from './types';
 import EditHeadingCell from './EditHeadingCell/EditHeadingCell';
 import HeadingBody, { HeadingBodyProps } from './HeadingBody/HeadingBody';
-import { SortBy, SortOrder } from '../JobTable/types';
+import { ColumnKey, FilterKeyType, SortOrder } from '../JobTable/types';
 import { useMapPropsToState } from '../../hooks/useMapPropsToState';
 
 interface HeadingCellProps extends HeadingBodyProps {
    widthRange: T.WidthRange,
-   setFilter: () => void,
-   setSort: (by: SortBy, order: SortOrder) => void,
-   name: SortBy
+   setFilter: (by: ColumnKey, filter: FilterKeyType) => void,
+   setSort: (by: ColumnKey, order: SortOrder) => void,
+   name: ColumnKey
 }
 
 const HeadingCell: React.FC<HeadingCellProps> = ({

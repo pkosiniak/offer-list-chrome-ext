@@ -7,7 +7,7 @@ import ControlRow from './Rows/ControlRow';
 import HeadingRow from './Rows/HeadingRow';
 import OfferRow from './Rows/OfferRow';
 import { sortBy } from './sorting';
-import { SortType } from './types';
+import { FilterType, SortType } from './types';
 
 interface JobTableProps {
    originType: OriginType
@@ -17,13 +17,14 @@ const JobTable: React.FC<JobTableProps> = ({
    originType,
 }) => {
    const [sort, setSort] = useState<SortType>();
+   const [filter, setFilter] = useState<FilterType>();
    const [offerList, sender] = useOfferListDidUpdate(originType);
    const getSortedList = () => sort
       ? deepCopy(offerList).sort(sortBy[sort.by](sort.order))
       : offerList;
 
    const getList = () => {
-      console.log('sort', sort);
+      console.log('filter', filter);
       return getSortedList();
    };
 
@@ -33,6 +34,8 @@ const JobTable: React.FC<JobTableProps> = ({
             <HeadingRow
                sort={sort}
                setSort={setSort}
+               filter={filter}
+               setFilter={setFilter}
             />
             {getList().map((offer, index) => (
                <OfferRow

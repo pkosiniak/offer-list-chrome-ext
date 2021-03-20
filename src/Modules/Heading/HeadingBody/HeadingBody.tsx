@@ -1,12 +1,12 @@
 import React from 'react';
 import { CellWidth } from '../../CellsCollection/modules/Cells/shared/types.parts';
-import { SortOrder } from '../../JobTable/types';
+import { FilterKeyType, SortOrder } from '../../JobTable/types';
 import * as P from './parts';
 
 export interface HeadingBodyProps {
    width: CellWidth,
    sort: SortOrder
-   filter?: string,
+   filter?: FilterKeyType,
    text: string
 }
 

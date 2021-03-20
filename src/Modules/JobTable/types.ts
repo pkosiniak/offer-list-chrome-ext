@@ -7,18 +7,25 @@ export enum SortOrder {
    DESC = 'DESC'
 }
 
+export type FilterKeyType = string;
+
 export type TableKeys = Omit<typeof headingRowNames, 'Remove'>
 
-export type SortBy = keyof TableKeys
+export type ColumnKey = keyof TableKeys
 
 export type OrderType = SortOrder.ASC | SortOrder.DESC
 
 export type SortType = {
-   by: SortBy,
+   by: ColumnKey,
    order: OrderType
+}
+
+export type FilterType = {
+   by: ColumnKey,
+   filter: FilterKeyType
 }
 
 export type SortFunction = (order: OrderType) => (fst: Offer, snd: Offer) => number
 
-export type SortByType = Record<SortBy, SortFunction>
+export type SortByType = Record<ColumnKey, SortFunction>
 
