@@ -42,7 +42,8 @@ export const Sort = styled(Text)`
    ${inlineTextStyle}
 `;
 
-export const Heading = styled(Text)`
+export const Heading = styled(Text)<Required<WidthType>>`
    display: flex;
    padding: 6px;
+   text-align: center;
 `;

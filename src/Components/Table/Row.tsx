@@ -1,7 +1,5 @@
 import React, { CSSProperties, ReactNode } from 'react';
-import Cell from './Cell';
 import Column from './Column';
-import Heading from './Heading';
 import { TR } from './parts';
 
 interface RowProps {
@@ -9,18 +7,19 @@ interface RowProps {
    columns?: ReactNode[],
    style?: CSSProperties,
    columnStyle?: CSSProperties | CSSProperties[],
+   className?: string
 }
 
 const Row: React.FC<RowProps> = ({
    columns,
    isHeading,
    style,
+   className,
    columnStyle,
 }) => {
 
-
    return (
-      <TR style={style}>
+      <TR style={style} className={className} >
          {columns?.map((child, index) => (
             <Column
                key={index}

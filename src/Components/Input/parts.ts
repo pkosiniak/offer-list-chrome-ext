@@ -1,9 +1,8 @@
 import styled, { css } from 'styled-components';
 import { font } from '../../Styles/font';
-import { border, getTheme, theme, themeWithBorder } from '../../Styles/theme';
+import { theme, themeWithBorder } from '../../Styles/theme';
 
 const commonStyles = css`
-   /* font-size: 16px; */
    ${font.medium}
    padding: 6px;
    :disabled {
@@ -39,4 +38,7 @@ export const FileInput = styled.input`
 
 export const Select = styled.select`
    ${commonStyles}
+   :disabled {
+      opacity: unset;
+   }
 `;

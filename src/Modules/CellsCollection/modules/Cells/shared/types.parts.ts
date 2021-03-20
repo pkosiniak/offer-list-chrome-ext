@@ -1,12 +1,12 @@
 export enum CellWidth {
-   XSmall,
+   XSmall = 1,
    Small,
    Medium,
    Large,
    XLarge,
    XXLarge,
    X3Large,
-   Default = 2
+   Default = Medium
 }
 
 export type WidthType = { width?: CellWidth }
