@@ -1,5 +1,5 @@
 import React from 'react';
-import { CellWidth } from '../../CellsCollection/modules/Cells/shared/types.parts';
+import { CellWidth } from '../../Cells/shared/types.parts';
 import { FilterKeyType, SortOrder } from '../../JobTable/types';
 import * as P from './parts';
 

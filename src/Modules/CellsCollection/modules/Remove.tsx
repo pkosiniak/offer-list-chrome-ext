@@ -1,5 +1,5 @@
 import React from 'react';
-import DeleteButton from './Cells/components/DeleteButton';
+import DeleteButton from '../../InteractiveButtons/DeleteButton';
 
 interface RemoveProps {
    removeAction: () => void

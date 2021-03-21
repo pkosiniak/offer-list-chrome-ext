@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
-import { CellWidth } from '../CellsCollection/modules/Cells/shared/types';
+import { CellWidth } from '../Cells/shared/types';
 import { FilterType, SortType } from '../JobTable/types';
 
 export type WidthRange = {

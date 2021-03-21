@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import Table from '../../Components/Table/Table';
 import { useOfferListDidUpdate } from '../../hooks/useOfferDidUpdate';
+import { OfferList } from '../../types/job';
 import { OriginType } from '../../types/message';
 import { deepCopy } from '../../utils/deepCopy';
-import ControlRow from './Rows/ControlRow';
-import HeadingRow from './Rows/HeadingRow';
-import OfferRow from './Rows/OfferRow';
+import ControlRow from '../Rows/ControlRow';
+import HeadingRow from '../Rows/HeadingRow';
+import OfferRow from '../Rows/OfferRow';
 import { sortBy } from './sorting';
+import { filterBy } from './filtering';
 import { FilterType, SortType } from './types';
 
 interface JobTableProps {
@@ -19,13 +21,17 @@ const JobTable: React.FC<JobTableProps> = ({
    const [sort, setSort] = useState<SortType>();
    const [filter, setFilter] = useState<FilterType>();
    const [offerList, sender] = useOfferListDidUpdate(originType);
-   const getSortedList = () => sort
-      ? deepCopy(offerList).sort(sortBy[sort.by](sort.order))
-      : offerList;
+   const getSortedList = (list: OfferList) => sort
+      ? list.sort(sortBy[sort.by](sort.order))
+      : list;
 
+   const getFilteredList = (list: OfferList) => filter
+      ? list.filter(filterBy[filter.by](filter.filter))
+      : list;
    const getList = () => {
-      console.log('filter', filter);
-      return getSortedList();
+      const copy = deepCopy(offerList)
+      console.log('filter', filter, getFilteredList(copy));
+      return getFilteredList(getSortedList(deepCopy(offerList)));
    };
 
    return (

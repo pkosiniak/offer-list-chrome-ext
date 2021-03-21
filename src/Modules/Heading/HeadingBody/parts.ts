@@ -3,8 +3,8 @@ import Box from '../../../Components/Box/Box';
 import Text from '../../../Components/Text/Text';
 import { Color } from '../../../Styles/color';
 import { textShadow } from '../../../Styles/font';
-import { WidthType } from '../../CellsCollection/modules/Cells/shared/types';
-import { switchWidth } from '../../CellsCollection/modules/Cells/shared/utils.parts';
+import { WidthType } from '../../Cells/shared/types';
+import { switchWidth } from '../../Cells/shared/utils.parts';
 
 
 export const Wrapper = styled(Box)`

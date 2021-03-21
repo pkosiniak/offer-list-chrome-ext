@@ -20,16 +20,18 @@ const HeadingCell: React.FC<HeadingCellProps> = ({
    width,
    sort,
    setSort,
+   setFilter,
 }) => {
    const [sortState, setSortState] = useMapPropsToState<SortOrder>(sort);
    const [filterState, setFilterState] = useState<string>();
    const onOkClick = () => {
       setSort(name, sortState);
+      setFilter(name, filterState || '');
    };
    return (
       <P.Expandable
          onOkClick={onOkClick}
-         onCancelClick={() => { }}
+         onCancelClick={() => void 0}
          width={width}
          zIndex={1000}
          options={{ expandButtonHidden: true }}

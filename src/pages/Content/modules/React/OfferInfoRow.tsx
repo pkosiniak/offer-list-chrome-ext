@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Table from '../../../../Components/Table/Table';
-import HeadingRow from '../../../../Modules/JobTable/Rows/HeadingRow';
-import OfferRow from '../../../../Modules/JobTable/Rows/OfferRow';
+import HeadingRow from '../../../../Modules/Rows/HeadingRow';
+import OfferRow from '../../../../Modules/Rows/OfferRow';
 import { Offer, OfferList } from '../../../../types/job';
 import { Message, MESSAGE_TYPE, OfferByURL, OriginType } from '../../../../types/message';
 import { isJustJoin, isNoFluff } from '../helpers/helpers';
