@@ -5,15 +5,22 @@ Project created for personal use - helps me organize, and easier collect informa
 #### **The project will most likely not be supported after I find a job**
 _hopefully soon 😜_
 
+### Changelog 0.0.5:
+- Some unit tests ✔
+- Offer status column ✔
+- Sort by column ✔
+- Filtering ✔
+- Keyboard shortcuts ✔
+- Adjusted row height ✔
+- Background color changes on hover ✔
+- Partial code refactor ✔
+
 ### RoadMap:
 - Unit tests*
-- Offer status column -- _feature_
 - Adjust width of columns -- _feature_
-- Sort by column -- _feature_
 - Change history -- _feature_
-- Row height -- _bug_
-- Keyboard shortcuts - _feature, bug_
-- Styling adjustments - _UX bug_
+- More keyboard shortcuts -- _feature_
+- Styling adjustments (stil needs some tweaks) -- _UX bug_
 - Easy-filling - automatically fill cell with text selection -- _feature_
 - Add support for more apps (currently only justjoin.it and nofluffjobs.com) -- _feature_
 - Code refactor -- _blocked by vscode refactor extension project_
