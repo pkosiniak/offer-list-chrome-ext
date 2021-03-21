@@ -12,7 +12,7 @@ import { getSettingsListener } from '../../settings/settingsListener';
 import { SettingsType } from '../../types/settings';
 import { usePrevProps } from '../../hooks/usePrevProps';
 import CopyRow from './modules/CopyRow';
-import ExpandableCell from '../../Modules/CellsCollection/modules/Cells/ExpandableCell';
+import ExpandableCell from '../../Modules/Cells/ExpandableCell/ExpandableCell';
 
 const useSender = (originType: OriginType): SenderType => {
    const UUID = useUUID();

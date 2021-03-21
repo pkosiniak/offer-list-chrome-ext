@@ -1,10 +1,10 @@
 import React from 'react';
 import { Offer } from '../../../types/job';
 import { headingRowNames } from '../../common/common';
-import TextInputCell from './Cells/TextInputCell';
+import TextInputCell from '../../Cells/BasicCell/TextInputCell/TextInputCell';
 import { OFFER } from '../LocalStore/types';
 import { DispatchType } from '../types';
-import { CellWidth, CollectionProps } from './Cells/shared/types';
+import { CellWidth, CollectionProps } from '../../Cells/shared/types';
 
 type PositionProps = CollectionProps & Pick<Offer, 'position'> 
 

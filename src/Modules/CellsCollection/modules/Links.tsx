@@ -1,64 +1,93 @@
 import React, { useState } from 'react';
-import { useReducerEffect } from '../../../hooks/useReducerEffect';
 import { Offer, OfferLink } from '../../../types/job';
-import ExpandableCell from './Cells/ExpandableCell';
-import LinkCellBody from './Cells/LinkCellBody/LinkCellBody';
-import { linkCellReducer } from './Cells/localStore/reducers';
-import { LIST_CELL } from './Cells/localStore/types';
 import { OFFER } from '../LocalStore/types';
 import { usePrevProps } from '../../../hooks/usePrevProps';
-import { CellWidth, CollectionProps } from './Cells/shared/types';
-import { setLinks } from './Cells/localStore/actions';
+import { CellWidth, CollectionProps } from '../../Cells/shared/types';
+import { ListCell } from '../../Cells/ExpandableCell';
+import LinkListItem from './LinkCellItem/LinkListItem';
+import { DeleteActionCallback, SetActionCallback } from '../../Cells/ExpandableCell/ListCell/ListCellBody';
+import { replaceItemAtIndex, deleteItemAtIndex } from '../../../utils/arrayReplaceRemove';
+import { useMapPropsToState } from '../../../hooks/useMapPropsToState';
 
 type LinksProps = CollectionProps & Pick<Offer, 'links'>;
 
-const Links = ({ dispatch, zIndex, links }: LinksProps) => {
-   const [state, setState] = useReducerEffect(
-      linkCellReducer,
-      { links: links || [] },
-      { type: LIST_CELL.LINK_UPDATE, links },
-   );
-   const prevState = usePrevProps(state);
+const Links = ({ dispatch, zIndex, links: offerLinks }: LinksProps) => {
+   // const [state, setState] = useReducerEffect(
+   //    linkCellReducer,
+   //    { links: links || [] },
+   //    { type: LIST_CELL.LINK_UPDATE, links },
+   // );
+   const [links, setLinks] = useMapPropsToState(offerLinks);
+   const prevLinks = usePrevProps(offerLinks);
    const [newItem, setNewItem] = useState<OfferLink>();
 
    const onOkClick = () => {
       const newLinks = newItem
-         ? state.links?.concat(newItem)
-         : state.links;
+         ? links?.concat(newItem)
+         : links;
       dispatch({
          type: OFFER.LINKS,
          links: newLinks,
       });
       setNewItem(void 0);
    };
-   const dispatchLinks = (
-      links: OfferLink[],
-   ) => setState(setLinks(links));
+   // const dispatchLinks = (
+   //    links: OfferLink[],
+   // ) => setLinks(links);
 
    const onCancelClick = () => {
-      prevState?.links
-         && dispatchLinks(prevState.links);
+      prevLinks && setLinks(prevLinks);
       setNewItem(void 0);
    };
 
+   const setItem: SetActionCallback<OfferLink> = (
+      links, index, link,
+   ) => setLinks(replaceItemAtIndex(links, index, link));
+
+   const deleteItem: DeleteActionCallback<OfferLink> = (
+      links, index,
+   ) => setLinks(deleteItemAtIndex(links, index));
+
    return (
-      <ExpandableCell
-         onCancelClick={onCancelClick}
+      <ListCell
+         list={links}
+         setItem={setItem}
+         deleteItem={deleteItem}
+         newItem={newItem}
+         setNewItem={setNewItem}
+         deleteNewItem={() => setNewItem(void 0)}
+         onAddNewItemClick={() => setNewItem({ url: '', name: '', isAvailable: true })}
          onOkClick={onOkClick}
+         onCancelClick={onCancelClick}
          zIndex={zIndex || 1}
          width={CellWidth.Large}
       >
-         {(expandableState) => (
-            <LinkCellBody
-               state={state}
-               setState={dispatchLinks}
-               newItem={newItem}
-               setNewItem={setNewItem}
-               onOkClick={onOkClick}
-               expandableState={expandableState}
+         {(listState, expandableState) => (
+            <LinkListItem
+               link={listState.item}
+               setLink={listState.setItem}
+               deleteLink={listState.deleteItem}
+               {...expandableState}
             />
          )}
-      </ExpandableCell>
+      </ListCell>
+      // <ExpandableCell
+      //    onCancelClick={onCancelClick}
+      //    onOkClick={onOkClick}
+      //    zIndex={zIndex || 1}
+      //    width={CellWidth.Large}
+      // >
+      //    {(expandableState) => (
+      //       <LinkCellBody
+      //          state={state}
+      //          setState={dispatchLinks}
+      //          newItem={newItem}
+      //          setNewItem={setNewItem}
+      //          onOkClick={onOkClick}
+      //          expandableState={expandableState}
+      //       />
+      //    )}
+      // </ExpandableCell>
    );
 };
 

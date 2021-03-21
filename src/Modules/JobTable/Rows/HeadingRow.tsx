@@ -1,6 +1,6 @@
 import React from 'react';
 import Row from '../../../Components/Table/Row';
-import { CellWidth } from '../../CellsCollection/modules/Cells/shared/types';
+import { CellWidth } from '../../Cells/shared/types';
 import { headingRowNames } from '../../common/common';
 import HeadingCell from '../../Heading/HeadingCell';
 import { FilteringProps, SortingProps } from '../../Heading/types';
