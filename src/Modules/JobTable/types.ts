@@ -29,3 +29,5 @@ export type SortFunction = (order: OrderType) => (fst: Offer, snd: Offer) => num
 
 export type SortByType = Record<ColumnKey, SortFunction>
 
+type FilterFunction = (filter: FilterKeyType) => (value: Offer, index: number, array: Offer[]) => boolean
+export type FilterByType = Record<ColumnKey, FilterFunction>
