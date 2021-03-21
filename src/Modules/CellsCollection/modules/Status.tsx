@@ -2,8 +2,8 @@ import React from 'react';
 import { ApplicationStatus, Offer } from '../../../types/job';
 import { OFFER } from '../LocalStore/types';
 import { DispatchType } from '../types';
-import SelectCell from './Cells/SelectCell';
-import { CellWidth, CollectionProps } from './Cells/shared/types';
+import SelectCell from '../../Cells/BasicCell/SelectCell/SelectCell';
+import { CellWidth, CollectionProps } from '../../Cells/shared/types';
 
 type StatusProps = CollectionProps & Pick<Offer, 'status'>
 

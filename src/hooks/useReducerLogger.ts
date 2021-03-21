@@ -34,10 +34,18 @@ export const useReducerLogger = <S extends {}, A extends S>(
       return nextState;
    };
 
+type CreateLocalStoreOptions = {
+   useLogger?: boolean
+}
+
 export const useCreateLocalStore = <S extends {}, A extends S>(
    reducer: Reducer<S, A>,
    initialState: S,
-) => useReducer(
-      useReducerLogger(reducer, useID({})),
+   options?: CreateLocalStoreOptions,
+) => {
+   const { useLogger = true } = options || {};
+   return useReducer(
+      useLogger ? useReducerLogger(reducer, useID({})) : reducer,
       initialState,
    );
+};
