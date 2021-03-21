@@ -1,23 +1,15 @@
 import React, { useRef } from 'react';
 import styled from 'styled-components';
-import Button from '../../../Components/Button/Button';
-import { OfferList, ExportOfferList } from '../../../types/job';
+import Button from '../../Components/Button/Button';
+import { OfferList, ExportOfferList } from '../../types/job';
+import * as P from './parts';
 
 
-export const DownloadArrow = styled.div`
-   transform: rotate(90deg) scale(1,2);
-   font-stretch: ultra-expanded;
-   margin-right: 4px;
-`;
 
-export const DownloadButton = styled(Button)`
-   display: flex;
-`;
-
-interface DownloadProps {
+interface DownloadButtonProps {
    offerList: OfferList
 }
-export const Download: React.FC<DownloadProps> = ({
+export const DownloadButton: React.FC<DownloadButtonProps> = ({
    offerList,
 }) => {
    const ref = useRef<HTMLAnchorElement>(null);
@@ -45,14 +37,14 @@ export const Download: React.FC<DownloadProps> = ({
    };
    return (
       <>
-         <DownloadButton
+         <P.DownloadButton
             onClick={downloadBackup}
          >
-            <DownloadArrow>
+            <P.DownloadArrow>
                {'⇥'}
-            </DownloadArrow>
+            </P.DownloadArrow>
             {'BACKUP'}
-         </DownloadButton>
+         </P.DownloadButton>
          <a ref={ref} style={{ display: 'none' }} />
       </>
    );

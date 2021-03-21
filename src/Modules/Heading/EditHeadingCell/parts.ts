@@ -4,7 +4,7 @@ import Select from '../../../Components/Input/Select/Select';
 import TextInput from '../../../Components/Input/TextInput/TextInput';
 
 export const Wrapper = styled(Box)`
-   /* flex-grow: 1; */
+   z-index: 1000;
 `;
 
 export const StyledSelect = styled(Select)`

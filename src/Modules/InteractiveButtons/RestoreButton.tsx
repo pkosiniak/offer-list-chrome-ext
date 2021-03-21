@@ -1,15 +1,13 @@
 import React, { useRef } from 'react';
 import styled from 'styled-components';
-import Button from '../../../Components/Button/Button';
-import FileInput from '../../../Components/Input/FileInput/FileInput';
-import { useID } from '../../../hooks/useID';
-import { ExportOfferList } from '../../../types/job';
-import { MESSAGE_TYPE, SenderType } from '../../../types/message';
-import { messageSender } from '../../../utils/messages/messageSender';
+import Button from '../../Components/Button/Button';
+import FileInput from '../../Components/Input/FileInput/FileInput';
+import { useID } from '../../hooks/useID';
+import { ExportOfferList } from '../../types/job';
+import { MESSAGE_TYPE, SenderType } from '../../types/message';
+import { messageSender } from '../../utils/messages/messageSender';
+import * as P from './parts';
 
-const Label = styled.label`
-   display: flex;
-`;
 
 interface RestoreButtonProps {
    sender: SenderType
@@ -19,7 +17,7 @@ const RestoreButton: React.FC<RestoreButtonProps> = ({ sender }) => {
    const ref = useRef<HTMLLabelElement>(null);
    const ID = useID({ prefix: 'fileInput' });
    return (
-      <Label ref={ref} htmlFor={ID}>
+      <P.Label ref={ref} htmlFor={ID}>
          <Button
             text={'↺ Restore'}
             onClick={() => ref.current?.click()}
@@ -43,7 +41,7 @@ const RestoreButton: React.FC<RestoreButtonProps> = ({ sender }) => {
                );
             }}
          />
-      </Label>
+      </P.Label>
    );
 };
 

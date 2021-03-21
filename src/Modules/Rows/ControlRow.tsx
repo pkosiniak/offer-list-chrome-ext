@@ -1,26 +1,22 @@
 import React from 'react';
-import styled from 'styled-components';
-import Box from '../../../Components/Box/Box';
-import Button from '../../../Components/Button/Button';
-import { OfferList } from '../../../types/job';
-import { MESSAGE_TYPE, SenderType } from '../../../types/message';
-import { messageSender } from '../../../utils/messages/messageSender';
-import { SendToOption } from '../../../utils/messages/types';
-import { Download } from './Download';
-import RestoreButton from './RestoreButton';
+import Button from '../../Components/Button/Button';
+import { OfferList } from '../../types/job';
+import { MESSAGE_TYPE, SenderType } from '../../types/message';
+import { messageSender } from '../../utils/messages/messageSender';
+import { SendToOption } from '../../utils/messages/types';
+import { DownloadButton } from '../InteractiveButtons/DownloadButton';
+import RestoreButton from '../InteractiveButtons/RestoreButton';
+import * as P from './parts';
 
 interface AddRowProps {
    sender: SenderType,
    offerList: OfferList
 }
 
-const Wrapper = styled(Box)`
-   margin: 4px 0;
-`;
 
 const ControlRow: React.FC<AddRowProps> = ({ sender, offerList }) => {
    return (
-      <Wrapper>
+      <P.Wrapper>
          <Button
             key={'addRowButton'}
             text={'➕ Row'}
@@ -46,11 +42,11 @@ const ControlRow: React.FC<AddRowProps> = ({ sender, offerList }) => {
                SendToOption.Runtime,
             )}
          />
-         <Download
+         <DownloadButton
             offerList={offerList}
          />
          <RestoreButton sender={sender} />
-      </Wrapper>
+      </P.Wrapper>
    );
 };
 
